@@ -55,8 +55,13 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/rule — 커스텀 규칙\n"
         "/history — 정리 이력\n"
         "/gdrive — 구글 드라이브\n\n"
-        f"현재 연결된 기기: {DEVICE_NAME}\n"
-        "예시: /scan D:\\Downloads"
+        f"현재 연결된 기기: {DEVICE_NAME}\n\n"
+        "[자주 쓰는 경로]\n"
+        "/scan C:\\Users\\Windows11 Pro\\Desktop — 바탕화면\n"
+        "/scan C:\\Users\\Windows11 Pro\\Downloads — 다운로드\n"
+        "/scan C:\\Users\\Windows11 Pro\\Documents — 문서\n"
+        "/scan C:\\Users\\Windows11 Pro\\Pictures — 사진\n"
+        "/report 경로 — 한번에 종합 진단"
     )
     await update.message.reply_text(text)
 
@@ -86,7 +91,13 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/rule 패턴 폴더 — 규칙 추가\n"
         "/delrule 패턴 — 규칙 삭제\n"
         "/gdrive 폴더ID — 드라이브 정리\n\n"
-        "폴더 경로만 보내도 /scan 으로 동작합니다."
+        "폴더 경로만 보내도 /scan 으로 동작합니다.\n\n"
+        "[자주 쓰는 경로]\n"
+        "/scan C:\\Users\\Windows11 Pro\\Desktop — 바탕화면\n"
+        "/scan C:\\Users\\Windows11 Pro\\Downloads — 다운로드\n"
+        "/scan C:\\Users\\Windows11 Pro\\Documents — 문서\n"
+        "/scan C:\\Users\\Windows11 Pro\\Pictures — 사진\n"
+        "/report 경로 — 한번에 종합 진단"
     )
     await update.message.reply_text(text)
 
