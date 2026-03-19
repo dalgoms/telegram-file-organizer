@@ -129,7 +129,8 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "  /ver 경로       보고서_최종_수정 같은 버전 찾기\n"
         "  /size 경로      용량 많이 차지하는 파일\n"
         "  /old 경로       오래된 파일 연도별 정리 제안\n"
-        "  /find 키워드    파일 이름으로 검색\n\n"
+        "  /find 키워드    파일 이름으로 검색\n"
+        "  → 결과에서 바로 정리/삭제 가능!\n\n"
         "3. 나만의 규칙 만들기\n"
         "  /rule               등록된 규칙 보기\n"
         "  /rule *.pptx 문서   확장자별 폴더 지정\n"
@@ -380,6 +381,8 @@ async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(f"{TAG} 중복 파일을 찾고 있어요...")
     groups = find_duplicates(scan)
+    if groups:
+        record_duplicates(len(groups))
     await safe_reply(update.message, f"{TAG}\n{format_duplicates(groups)}")
 
     chains = find_version_chains(scan)
@@ -387,6 +390,24 @@ async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     yearly = suggest_archive(scan)
     await safe_reply(update.message, f"{TAG}\n{format_archive_suggestion(yearly)}")
+
+    all_files = []
+    for g in groups:
+        all_files.extend(g.files[1:])
+    for c in chains:
+        all_files.extend(c.versions)
+    for fl in yearly.values():
+        all_files.extend(fl)
+
+    seen = set()
+    unique_files = []
+    for f in all_files:
+        if f.path not in seen:
+            seen.add(f.path)
+            unique_files.append(f)
+
+    if unique_files:
+        await _show_action_buttons(update, update.effective_user.id, unique_files)
 
 
 async def run_command(update: Update, context: ContextTypes.DEFAULT_TYPE):

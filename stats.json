@@ -1,7 +1,7 @@
 {
-  "total_moved": 225,
-  "total_sessions": 2,
-  "total_undo": 0,
+  "total_moved": 256,
+  "total_sessions": 3,
+  "total_undo": 1,
   "total_duplicates_found": 14,
   "streak_days": [
     "2026-03-19"
@@ -9,7 +9,8 @@
   "achievements": [
     "first_clean",
     "files_100",
-    "night_owl"
+    "night_owl",
+    "undo_first"
   ],
   "first_use": "2026-03-19T23:09:02.796753"
 }
