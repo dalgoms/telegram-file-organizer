@@ -269,6 +269,24 @@ async def _scan_for_analysis(update, context, recursive=False):
     return None
 
 
+async def _show_action_buttons(update, user_id: int, files: list):
+    """분석 결과 파일에 정리/삭제 버튼을 보여준다."""
+    if not files:
+        return
+    FIND_RESULTS[user_id] = files
+    count = len(files)
+    keyboard = [
+        [
+            InlineKeyboardButton(f"{count}개 파일 정리하기", callback_data="find_organize"),
+            InlineKeyboardButton(f"{count}개 파일 삭제하기", callback_data="find_delete_ask"),
+        ]
+    ]
+    await update.message.reply_text(
+        "검색된 파일을 어떻게 할까요?",
+        reply_markup=InlineKeyboardMarkup(keyboard),
+    )
+
+
 async def dup_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     scan = await _scan_for_analysis(update, context)
     if not scan:
@@ -279,6 +297,12 @@ async def dup_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         record_duplicates(len(groups))
     await safe_reply(update.message, f"{TAG}\n{format_duplicates(groups)}")
 
+    if groups:
+        dup_files = []
+        for g in groups:
+            dup_files.extend(g.files[1:])
+        await _show_action_buttons(update, update.effective_user.id, dup_files)
+
 
 async def ver_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     scan = await _scan_for_analysis(update, context)
@@ -286,6 +310,12 @@ async def ver_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     chains = find_version_chains(scan)
     await safe_reply(update.message, f"{TAG}\n{format_version_chains(chains)}")
+
+    if chains:
+        ver_files = []
+        for c in chains:
+            ver_files.extend(c.versions)
+        await _show_action_buttons(update, update.effective_user.id, ver_files)
 
 
 async def size_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -301,6 +331,10 @@ async def old_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     yearly = suggest_archive(scan)
     await safe_reply(update.message, f"{TAG}\n{format_archive_suggestion(yearly)}")
+
+    old_files = [f for fl in yearly.values() for f in fl]
+    if old_files:
+        await _show_action_buttons(update, update.effective_user.id, old_files)
 
 
 async def find_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -326,23 +360,7 @@ async def find_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await safe_reply(update.message, f"{TAG}\n{format_search_results(results, keyword)}")
 
     if results:
-        FIND_RESULTS[user_id] = results
-        keyboard = [
-            [
-                InlineKeyboardButton(
-                    f"검색된 {len(results)}개 파일 정리하기",
-                    callback_data="find_organize",
-                ),
-                InlineKeyboardButton(
-                    f"검색된 {len(results)}개 파일 삭제하기",
-                    callback_data="find_delete_ask",
-                ),
-            ]
-        ]
-        await update.message.reply_text(
-            "검색된 파일을 어떻게 할까요?",
-            reply_markup=InlineKeyboardMarkup(keyboard),
-        )
+        await _show_action_buttons(update, user_id, results)
 
 
 async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
