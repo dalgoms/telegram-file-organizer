@@ -226,7 +226,7 @@ async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ],
     ]
 
-    file_only = [f for f in scan.files if not f.is_dir]
+    file_only = [f for f in scan_result.files if not f.is_dir]
     FIND_RESULTS[update.effective_user.id] = file_only
 
     await update.message.reply_text(
