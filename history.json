@@ -1,0 +1,55 @@
+[
+  {
+    "session_id": "20260319_215427",
+    "root_path": "D:\\cursor test",
+    "timestamp": "2026-03-19T21:54:27.518524",
+    "moved": [
+      {
+        "from": "D:\\cursor test\\glass_card_template.png",
+        "to": "D:\\cursor test\\이미지\\디자인\\glass_card_template.png",
+        "name": "glass_card_template.png"
+      },
+      {
+        "from": "D:\\cursor test\\landscape_1200x627.png",
+        "to": "D:\\cursor test\\이미지\\디자인\\landscape_1200x627.png",
+        "name": "landscape_1200x627.png"
+      },
+      {
+        "from": "D:\\cursor test\\portrait_1080x1350.png",
+        "to": "D:\\cursor test\\이미지\\디자인\\portrait_1080x1350.png",
+        "name": "portrait_1080x1350.png"
+      },
+      {
+        "from": "D:\\cursor test\\square_1080x1080.png",
+        "to": "D:\\cursor test\\이미지\\디자인\\square_1080x1080.png",
+        "name": "square_1080x1080.png"
+      },
+      {
+        "from": "D:\\cursor test\\Seyoung Lee — Growth Marketing Lead.pdf",
+        "to": "D:\\cursor test\\문서\\이력서\\Seyoung Lee — Growth Marketing Lead.pdf",
+        "name": "Seyoung Lee — Growth Marketing Lead.pdf"
+      },
+      {
+        "from": "D:\\cursor test\\이력서_이세영_2026.pdf",
+        "to": "D:\\cursor test\\문서\\이력서\\이력서_이세영_2026.pdf",
+        "name": "이력서_이세영_2026.pdf"
+      },
+      {
+        "from": "D:\\cursor test\\KDI x Microsoft __ Behance.html",
+        "to": "D:\\cursor test\\기타\\웹파일\\KDI x Microsoft __ Behance.html",
+        "name": "KDI x Microsoft __ Behance.html"
+      },
+      {
+        "from": "D:\\cursor test\\robots.txt",
+        "to": "D:\\cursor test\\기타\\웹파일\\robots.txt",
+        "name": "robots.txt"
+      },
+      {
+        "from": "D:\\cursor test\\sitemap.xml",
+        "to": "D:\\cursor test\\기타\\웹파일\\sitemap.xml",
+        "name": "sitemap.xml"
+      }
+    ],
+    "failed": []
+  }
+]
