@@ -163,6 +163,14 @@ File Organizer Bot 시작... [내PC]
 > "사용자이름" 부분은 본인 PC의 실제 사용자명으로 바꾸세요.
 > 확인 방법: 파일 탐색기에서 `C:\Users\` 폴더를 열면 보입니다.
 
+봇이 자주 쓰는 경로를 자동 감지해서 `/start` 화면에 보여줍니다:
+```
+/scan C:\Users\사용자이름\Downloads     (다운로드)
+/scan C:\Users\사용자이름\Desktop       (바탕화면)
+/scan C:\Users\사용자이름\Documents     (문서)
+/scan C:\Users\사용자이름\Pictures      (사진)
+```
+
 ---
 
 ## 자주 쓰는 명령어
@@ -180,7 +188,44 @@ File Organizer Bot 시작... [내PC]
 | `/find 키워드` | 파일 검색 |
 | `/report 경로` | 종합 리포트 (위 분석 전부) |
 | `/rule` | 커스텀 규칙 관리 |
+| `/path` | 경로 바로가기 관리 |
+| `/schedule` | 예약 스캔 관리 |
+| `/stats` | 정리 기록 + 업적 |
 | `/history` | 정리 이력 |
+
+> 모든 분석 결과(/dup, /ver, /old, /find, /report)에서 **정리하기 / 삭제하기 버튼**이 나옵니다.
+
+---
+
+## 정리하면 이렇게 됩니다
+
+### Before
+```
+Downloads/
+  ├─ 2026_Q1_마케팅보고서_v3.pptx
+  ├─ IMG_20260318_142355.jpg
+  ├─ 회의록_팀블로_0312.docx
+  ├─ budget_2026.xlsx
+  └─ screenshot_234.png
+```
+
+### After
+```
+Downloads/
+  └─ 정리_2026-03-19/
+       ├─ 문서/보고서/
+       │    └─ 2026_Q1_마케팅보고서_v3.pptx
+       ├─ 문서/회의록/
+       │    └─ 회의록_팀블로_0312.docx
+       ├─ 문서/재무/
+       │    └─ budget_2026.xlsx
+       ├─ 이미지/사진/
+       │    └─ IMG_20260318_142355.jpg
+       └─ 이미지/스크린샷/
+            └─ screenshot_234.png
+```
+
+날짜 폴더가 자동 생성되어 **언제 정리했는지** 한눈에 확인 가능합니다.
 
 ---
 
@@ -193,6 +238,7 @@ File Organizer Bot 시작... [내PC]
 2. `.env` 설정:
 ```
 TELEGRAM_BOT_TOKEN=집봇_토큰
+OPENAI_API_KEY=OpenAI_키
 DEVICE_NAME=집PC
 ```
 
@@ -202,6 +248,7 @@ DEVICE_NAME=집PC
 3. `.env` 설정:
 ```
 TELEGRAM_BOT_TOKEN=회사봇_토큰
+OPENAI_API_KEY=OpenAI_키
 DEVICE_NAME=회사PC
 ```
 
@@ -230,13 +277,18 @@ DEVICE_NAME=회사PC
 
 ## 안전장치 (걱정하지 마세요)
 
+이 봇은 **사용자가 직접 버튼을 누르지 않는 한** 아무것도 이동하거나 삭제하지 않습니다.
+자동 정리, 자동 삭제 기능은 의도적으로 배제했습니다.
+
 | 걱정 | 해결 |
 |------|------|
+| AI가 멋대로 파일을 지우면? | 자동 삭제 없음. 삭제는 2단계 확인(목록 확인 → 재확인) 후에만 실행 |
 | 파일이 잘못 정리되면? | `/undo` 한 번이면 원래대로 돌아와요 |
 | 시스템 파일이 이동되면? | Windows, Program Files 등은 자동 차단돼요 |
 | 정리 중에 PC가 꺼지면? | 매 파일 이동마다 이력을 저장해서 undo 가능해요 |
 | 사용 중인 파일은? | 열려있는 파일은 자동으로 건너뛰어요 |
 | 예전 스캔 결과로 실행하면? | 5분 지나면 자동 만료, 다시 스캔 안내해요 |
+| 예약 스캔이 자동으로 정리하면? | 예약은 알림만 보냄. 실행은 항상 사용자가 직접 |
 
 ---
 
@@ -244,6 +296,9 @@ DEVICE_NAME=회사PC
 
 ### "TELEGRAM_BOT_TOKEN이 설정되지 않았습니다"
 → `.env` 파일이 프로젝트 폴더에 있는지 확인. `.env.example`이 아니라 `.env`여야 합니다.
+
+### "OpenAI API 키가 설정되지 않았어요"
+→ `.env` 파일의 `OPENAI_API_KEY` 값을 확인. 키가 만료되었을 수 있으니 https://platform.openai.com/api-keys 에서 재발급.
 
 ### "pip 명령어를 찾을 수 없습니다"
 → Python 설치 시 "Add to PATH" 를 안 했을 수 있음. Python을 재설치하거나:
@@ -260,10 +315,10 @@ python -m pip install -r requirements.txt
 - Mac/Linux: `pkill python`
 
 ### 파일이 정리 안 됨
-→ `/scan`은 미리보기만 보여줍니다. 실제 정리는 "정리 실행" 버튼을 누르거나 `/run`을 입력해야 합니다.
+→ `/scan`은 미리보기만 보여줍니다. 실제 정리는 "정리하기" 버튼을 누르거나 `/run`을 입력해야 합니다.
 
 ### 잘못 정리한 경우
-→ `/undo`를 입력하면 마지막 정리가 되돌려집니다.
+→ `/undo`를 입력하면 마지막 정리가 되돌려집니다. 날짜 폴더도 함께 삭제됩니다.
 
 ---
 
@@ -288,16 +343,20 @@ telegram-file-organizer/
 ├── bot.py              # 메인 봇 (건드릴 필요 없음)
 ├── scanner.py          # 파일 스캔
 ├── classifier.py       # AI 분류
-├── organizer.py        # 파일 이동 + Undo
+├── organizer.py        # 파일 이동 + Undo + 날짜 폴더
 ├── analyzer.py         # 중복/버전/용량 분석
 ├── rules.py            # 커스텀 규칙
+├── shortcuts.py        # 경로 바로가기
+├── stats.py            # 정리 통계 + 업적
+├── scheduler.py        # 예약 스캔
 ├── config.py           # 설정
 ├── cloud/gdrive.py     # Google Drive (선택)
 ├── .env                # ★ 여기만 수정하면 됨
 ├── .env.example        # .env 템플릿
 ├── requirements.txt    # 패키지 목록
 ├── README.md           # 프로젝트 소개
-└── ARCHITECTURE.md     # 기술 문서
+├── ARCHITECTURE.md     # 기술 문서
+└── SETUP_GUIDE.md      # 이 가이드
 ```
 
 > **핵심: `.env` 파일만 본인 것으로 채우면 나머지는 건드릴 필요 없습니다.**
