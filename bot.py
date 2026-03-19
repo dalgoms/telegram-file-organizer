@@ -212,17 +212,26 @@ async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     }
 
     folder_count = len(classification.get("folders", {}))
+    file_count = sum(len(v) for v in classification.get("folders", {}).values())
     keyboard = [
         [
             InlineKeyboardButton(
                 f"{folder_count}개 폴더로 정리하기",
                 callback_data=f"run_organize:{scan_ts}",
             ),
+            InlineKeyboardButton(f"{file_count}개 파일 삭제하기", callback_data="find_delete_ask"),
+        ],
+        [
             InlineKeyboardButton("그만두기", callback_data="cancel_organize"),
-        ]
+        ],
     ]
+
+    file_only = [f for f in scan.files if not f.is_dir]
+    FIND_RESULTS[update.effective_user.id] = file_only
+
     await update.message.reply_text(
         "위 분류가 마음에 드시면 '정리하기'를 눌러주세요.\n"
+        "필요 없는 파일은 '삭제하기'로 정리할 수도 있어요.\n"
         "잘못되면 /undo 로 바로 되돌릴 수 있어요.",
         reply_markup=InlineKeyboardMarkup(keyboard),
     )

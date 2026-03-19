@@ -1221,5 +1221,58 @@
       "데이터/CSV",
       "기타"
     ]
+  },
+  {
+    "session_id": "20260319_233726",
+    "root_path": "C:\\Users\\Windows11 Pro\\Pictures",
+    "timestamp": "2026-03-19T23:37:26.914799",
+    "moved": [
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Pictures\\KakaoTalk_20260317_223106614.png",
+        "to": "C:\\Users\\Windows11 Pro\\Pictures\\이미지\\사진\\KakaoTalk_20260317_223106614.png",
+        "name": "KakaoTalk_20260317_223106614.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Pictures\\KakaoTalk_20260317_223413733.png",
+        "to": "C:\\Users\\Windows11 Pro\\Pictures\\이미지\\사진\\KakaoTalk_20260317_223413733.png",
+        "name": "KakaoTalk_20260317_223413733.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Pictures\\KakaoTalk_20260317_223537356.png",
+        "to": "C:\\Users\\Windows11 Pro\\Pictures\\이미지\\사진\\KakaoTalk_20260317_223537356.png",
+        "name": "KakaoTalk_20260317_223537356.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Pictures\\landscape_1200x627.png",
+        "to": "C:\\Users\\Windows11 Pro\\Pictures\\이미지\\사진\\landscape_1200x627.png",
+        "name": "landscape_1200x627.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Pictures\\portrait_1080x1350.png",
+        "to": "C:\\Users\\Windows11 Pro\\Pictures\\이미지\\사진\\portrait_1080x1350.png",
+        "name": "portrait_1080x1350.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Pictures\\square_1080x1080.png",
+        "to": "C:\\Users\\Windows11 Pro\\Pictures\\이미지\\사진\\square_1080x1080.png",
+        "name": "square_1080x1080.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Pictures\\KakaoTalk_20260318_194450335.mp4",
+        "to": "C:\\Users\\Windows11 Pro\\Pictures\\영상\\촬영\\KakaoTalk_20260318_194450335.mp4",
+        "name": "KakaoTalk_20260318_194450335.mp4"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Pictures\\glass_card_template.png",
+        "to": "C:\\Users\\Windows11 Pro\\Pictures\\기타\\glass_card_template.png",
+        "name": "glass_card_template.png"
+      }
+    ],
+    "failed": [],
+    "classification_folders": [
+      "이미지/사진",
+      "영상/촬영",
+      "기타"
+    ]
   }
 ]
