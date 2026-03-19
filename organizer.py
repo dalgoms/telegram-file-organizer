@@ -29,18 +29,22 @@ def execute_organization(root_path: str, classification: dict) -> dict:
     """
     root = Path(root_path)
     folders = classification.get("folders", {})
-    session_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+    now = datetime.now()
+    session_id = now.strftime("%Y%m%d_%H%M%S")
+    date_prefix = f"정리_{now.strftime('%Y-%m-%d')}"
 
     moved = []
     failed = []
 
+    stamped_folders = [f"{date_prefix}/{k}" for k in folders.keys()]
     result = {
         "session_id": session_id,
         "root_path": root_path,
-        "timestamp": datetime.now().isoformat(),
+        "timestamp": now.isoformat(),
         "moved": moved,
         "failed": failed,
-        "classification_folders": list(folders.keys()),
+        "classification_folders": stamped_folders,
+        "date_prefix": date_prefix,
     }
 
     history = load_history()
@@ -55,7 +59,7 @@ def execute_organization(root_path: str, classification: dict) -> dict:
                 failed.append({"name": fname, "error": "잘못된 폴더명"})
             continue
 
-        target_dir = root / safe_name
+        target_dir = root / date_prefix / safe_name
         target_dir.mkdir(parents=True, exist_ok=True)
 
         for fname in file_list:
@@ -190,11 +194,14 @@ def format_result(result: dict) -> str:
         except ValueError:
             folders_used.add(Path(item["to"]).parent.name)
 
+    date_prefix = result.get("date_prefix", "")
     lines = [
         f"깔끔하게 정리했어요!",
         "",
+        f"  {date_prefix}/" if date_prefix else "",
         f"  파일 {len(moved)}개  ->  폴더 {len(folders_used)}개로 정돈",
     ]
+    lines = [l for l in lines if l or l == ""]
 
     if moved:
         lines.append("")

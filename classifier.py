@@ -132,17 +132,19 @@ def format_classification(result: dict, root_path: str) -> str:
     if "error" in result:
         return f"분류 중 문제가 생겼어요: {result['error']}"
 
+    from datetime import datetime
     folders = result.get("folders", {})
     reasoning = result.get("reasoning", "")
+    date_stamp = datetime.now().strftime("%Y-%m-%d")
 
     folder_name = Path(root_path).name if root_path else ""
-    lines = [f"--- '{folder_name}' 정리 미리보기 ---", ""]
+    lines = [f"--- '{folder_name}' 정리 미리보기 ---", f"정리_{date_stamp}/", ""]
 
     total = 0
     for folder, file_list in folders.items():
-        lines.append(f"/{folder}/")
+        lines.append(f"  /{folder}/")
         for fname in file_list:
-            lines.append(f"  {fname}")
+            lines.append(f"    {fname}")
             total += 1
         lines.append("")
 
