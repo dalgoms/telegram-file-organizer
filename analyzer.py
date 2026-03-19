@@ -107,7 +107,6 @@ def format_duplicates(groups: list[DuplicateGroup]) -> str:
     if len(groups) > 10:
         lines.append(f"... 외 {len(groups) - 10}그룹")
 
-    lines.append(f"\n/cleandup 으로 중복 정리 (원본 1개만 남기고 삭제)")
     return "\n".join(lines)
 
 
@@ -193,7 +192,6 @@ def format_version_chains(chains: list[VersionChain]) -> str:
     if len(chains) > 10:
         lines.append(f"... 외 {len(chains) - 10}그룹")
 
-    lines.append("\n최신 버전만 남기고 나머지는 /archive 로 보관할 수 있습니다.")
     return "\n".join(lines)
 
 
@@ -280,7 +278,6 @@ def format_archive_suggestion(yearly: dict[str, list[FileInfo]]) -> str:
             lines.append(f"    ... 외 {len(file_list) - 3}개")
         lines.append("")
 
-    lines.append("/archive 로 연도별 폴더로 자동 이동")
     return "\n".join(lines)
 
 

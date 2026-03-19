@@ -30,6 +30,26 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+MAX_MSG_LEN = 4000  # 텔레그램 제한 4096, 여유분 확보
+
+
+async def safe_reply(message, text: str):
+    """텔레그램 4096자 제한을 초과하면 자동으로 분할 전송한다."""
+    if len(text) <= MAX_MSG_LEN:
+        await message.reply_text(text)
+        return
+    lines = text.split("\n")
+    chunk = ""
+    for line in lines:
+        if len(chunk) + len(line) + 1 > MAX_MSG_LEN:
+            if chunk:
+                await message.reply_text(chunk)
+            chunk = line
+        else:
+            chunk = f"{chunk}\n{line}" if chunk else line
+    if chunk:
+        await message.reply_text(chunk)
+
 PENDING_SCANS: dict[int, dict] = {}
 LAST_SCANS: dict[int, "ScanResult"] = {}
 
@@ -107,17 +127,18 @@ async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("경로를 입력해주세요.\n예: /scan D:\\Downloads")
         return
 
-    args = " ".join(context.args)
     recursive = False
-    if args.endswith(" -r"):
+    raw_args = list(context.args)
+    if raw_args and raw_args[-1] == "-r":
         recursive = True
-        args = args[:-3].strip()
+        raw_args.pop()
+    args = " ".join(raw_args)
 
     await update.message.reply_text(f"{TAG} 스캔 중... {args}")
 
     scan_result = scan_local(args, recursive=recursive)
     summary = format_scan_summary(scan_result)
-    await update.message.reply_text(summary)
+    await safe_reply(update.message, summary)
 
     if scan_result.error or not scan_result.files:
         return
@@ -136,7 +157,7 @@ async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     classification = apply_rules(files, classification)
 
     preview = format_classification(classification, scan_result.root_path)
-    await update.message.reply_text(preview)
+    await safe_reply(update.message, preview)
 
     user_id = update.effective_user.id
     LAST_SCANS[user_id] = scan_result
@@ -162,7 +183,7 @@ async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # 분석 명령어 (장기 근속자를 위한 핵심 기능)
 # ---------------------------------------------------------------------------
 
-async def _scan_for_analysis(update, context, recursive=True):
+async def _scan_for_analysis(update, context, recursive=False):
     """분석 명령어 공통: 경로로 스캔하거나 마지막 스캔 재사용."""
     user_id = update.effective_user.id
 
@@ -189,7 +210,7 @@ async def dup_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     await update.message.reply_text(f"{TAG} 중복 파일 분석 중...")
     groups = find_duplicates(scan)
-    await update.message.reply_text(f"{TAG}\n{format_duplicates(groups)}")
+    await safe_reply(update.message, f"{TAG}\n{format_duplicates(groups)}")
 
 
 async def ver_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -197,14 +218,14 @@ async def ver_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not scan:
         return
     chains = find_version_chains(scan)
-    await update.message.reply_text(f"{TAG}\n{format_version_chains(chains)}")
+    await safe_reply(update.message, f"{TAG}\n{format_version_chains(chains)}")
 
 
 async def size_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     scan = await _scan_for_analysis(update, context)
     if not scan:
         return
-    await update.message.reply_text(f"{TAG}\n{analyze_size(scan)}")
+    await safe_reply(update.message, f"{TAG}\n{analyze_size(scan)}")
 
 
 async def old_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -212,7 +233,7 @@ async def old_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not scan:
         return
     yearly = suggest_archive(scan)
-    await update.message.reply_text(f"{TAG}\n{format_archive_suggestion(yearly)}")
+    await safe_reply(update.message, f"{TAG}\n{format_archive_suggestion(yearly)}")
 
 
 async def find_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -228,7 +249,7 @@ async def find_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     results = search_files(LAST_SCANS[user_id], keyword)
-    await update.message.reply_text(f"{TAG}\n{format_search_results(results, keyword)}")
+    await safe_reply(update.message, f"{TAG}\n{format_search_results(results, keyword)}")
 
 
 async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -240,20 +261,20 @@ async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"{TAG} [종합 리포트] {scan.root_path}\n분석 중...")
 
     summary = format_scan_summary(scan)
-    await update.message.reply_text(f"{TAG}\n{summary}")
+    await safe_reply(update.message, f"{TAG}\n{summary}")
 
     size_text = analyze_size(scan)
-    await update.message.reply_text(f"{TAG}\n{size_text}")
+    await safe_reply(update.message, f"{TAG}\n{size_text}")
 
     await update.message.reply_text(f"{TAG} 중복 파일 검사 중...")
     groups = find_duplicates(scan)
-    await update.message.reply_text(f"{TAG}\n{format_duplicates(groups)}")
+    await safe_reply(update.message, f"{TAG}\n{format_duplicates(groups)}")
 
     chains = find_version_chains(scan)
-    await update.message.reply_text(f"{TAG}\n{format_version_chains(chains)}")
+    await safe_reply(update.message, f"{TAG}\n{format_version_chains(chains)}")
 
     yearly = suggest_archive(scan)
-    await update.message.reply_text(f"{TAG}\n{format_archive_suggestion(yearly)}")
+    await safe_reply(update.message, f"{TAG}\n{format_archive_suggestion(yearly)}")
 
 
 async def run_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -406,10 +427,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.strip()
 
     looks_like_path = (
-        text.startswith("/") or
         text.startswith("~") or
-        (len(text) > 2 and text[1] == ":") or  # D:\...
-        text.startswith("\\\\")
+        (len(text) > 2 and text[1] == ":" and text[2] in "/\\") or  # D:\... or D:/...
+        text.startswith("\\\\") or
+        (text.startswith("/") and len(text) > 3 and "/" in text[1:])  # /home/user/... (Unix 경로만)
     )
 
     if looks_like_path:
