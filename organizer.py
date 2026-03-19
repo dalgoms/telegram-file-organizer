@@ -1,4 +1,5 @@
 import json
+import os
 import shutil
 from pathlib import Path
 from datetime import datetime
@@ -15,19 +16,16 @@ def load_history() -> list[dict]:
 
 
 def save_history(history: list[dict]):
-    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+    """원자적 쓰기: 임시파일에 쓴 뒤 rename하여 중간 크래시에도 데이터 보존."""
+    tmp = HISTORY_FILE + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
         json.dump(history, f, ensure_ascii=False, indent=2)
+    os.replace(tmp, HISTORY_FILE)
 
 
 def execute_organization(root_path: str, classification: dict) -> dict:
     """분류 결과에 따라 파일을 실제로 이동한다.
-
-    Returns:
-        {
-            "moved": [{"from": str, "to": str, "name": str}],
-            "failed": [{"name": str, "error": str}],
-            "session_id": str
-        }
+    매 파일 이동마다 history를 저장하여 크래시 시에도 undo 가능.
     """
     root = Path(root_path)
     folders = classification.get("folders", {})
@@ -36,8 +34,28 @@ def execute_organization(root_path: str, classification: dict) -> dict:
     moved = []
     failed = []
 
+    result = {
+        "session_id": session_id,
+        "root_path": root_path,
+        "timestamp": datetime.now().isoformat(),
+        "moved": moved,
+        "failed": failed,
+        "classification_folders": list(folders.keys()),
+    }
+
+    history = load_history()
+    history.append(result)
+    if len(history) > 50:
+        history = history[-50:]
+
     for folder_name, file_list in folders.items():
-        target_dir = root / folder_name
+        safe_name = _sanitize_folder_name(folder_name)
+        if not safe_name:
+            for fname in file_list:
+                failed.append({"name": fname, "error": "잘못된 폴더명"})
+            continue
+
+        target_dir = root / safe_name
         target_dir.mkdir(parents=True, exist_ok=True)
 
         for fname in file_list:
@@ -48,7 +66,22 @@ def execute_organization(root_path: str, classification: dict) -> dict:
                 failed.append({"name": fname, "error": "파일을 찾을 수 없음"})
                 continue
 
+            if src.is_symlink():
+                failed.append({"name": fname, "error": "심볼릭 링크는 건너뜁니다"})
+                continue
+
+            if not str(src.resolve()).startswith(str(root.resolve())):
+                failed.append({"name": fname, "error": "루트 폴더 외부 파일 차단"})
+                continue
+
             if src == dst:
+                continue
+
+            try:
+                if os.path.getsize(str(src)) == 0:
+                    pass  # 빈 파일도 정리 허용
+            except OSError:
+                failed.append({"name": fname, "error": "파일 접근 불가 (잠금?)"})
                 continue
 
             if dst.exists():
@@ -66,24 +99,28 @@ def execute_organization(root_path: str, classification: dict) -> dict:
                     "to": str(dst),
                     "name": fname,
                 })
+                save_history(history)
+            except PermissionError:
+                failed.append({"name": fname, "error": "파일이 사용 중 (다른 프로그램이 열고 있음)"})
+            except OSError as e:
+                if "too long" in str(e).lower() or len(str(dst)) > 250:
+                    failed.append({"name": fname, "error": "경로가 너무 깁니다 (260자 초과)"})
+                else:
+                    failed.append({"name": fname, "error": str(e)})
             except Exception as e:
                 failed.append({"name": fname, "error": str(e)})
 
-    result = {
-        "session_id": session_id,
-        "root_path": root_path,
-        "timestamp": datetime.now().isoformat(),
-        "moved": moved,
-        "failed": failed,
-    }
-
-    history = load_history()
-    history.append(result)
-    if len(history) > 50:
-        history = history[-50:]
     save_history(history)
-
     return result
+
+
+def _sanitize_folder_name(name: str) -> str:
+    """GPT가 반환한 폴더명에서 위험한 경로 패턴을 제거한다."""
+    name = name.replace("\\", "/")
+    parts = [p for p in name.split("/") if p and p != ".." and p != "."]
+    if not parts:
+        return ""
+    return str(Path(*parts))
 
 
 def undo_last() -> dict:
@@ -111,23 +148,30 @@ def undo_last() -> dict:
         except Exception as e:
             failed.append({"name": item["name"], "error": str(e)})
 
-    _cleanup_empty_dirs(last.get("root_path", ""))
+    created_dirs = set()
+    classification_folders = last.get("classification_folders", [])
+    root = Path(last.get("root_path", ""))
+    for folder_name in classification_folders:
+        created_dirs.add(root / folder_name)
+        for parent in (root / folder_name).parents:
+            if parent == root:
+                break
+            created_dirs.add(parent)
+
+    _cleanup_created_dirs(created_dirs)
 
     save_history(history)
     return {"restored": restored, "failed": failed, "session_id": last["session_id"]}
 
 
-def _cleanup_empty_dirs(root_path: str):
-    """정리 후 빈 폴더를 삭제한다."""
-    if not root_path:
-        return
-    root = Path(root_path)
-    for d in sorted(root.rglob("*"), reverse=True):
-        if d.is_dir() and not any(d.iterdir()):
-            try:
+def _cleanup_created_dirs(dirs: set):
+    """봇이 만든 폴더 중 비어있는 것만 삭제한다. 원래 있던 폴더는 건드리지 않는다."""
+    for d in sorted(dirs, key=lambda x: len(str(x)), reverse=True):
+        try:
+            if d.is_dir() and not any(d.iterdir()):
                 d.rmdir()
-            except OSError:
-                pass
+        except OSError:
+            pass
 
 
 def format_result(result: dict) -> str:
@@ -138,36 +182,39 @@ def format_result(result: dict) -> str:
     moved = result.get("moved", [])
     failed = result.get("failed", [])
 
-    lines = [f"[정리 완료] {len(moved)}개 파일 이동"]
+    lines = [f"깔끔하게 정리했어요! ({len(moved)}개 파일)"]
 
     if moved:
         lines.append("")
         for item in moved[:20]:
-            rel_to = Path(item["to"]).relative_to(result.get("root_path", ""))
-            lines.append(f"  {item['name']} -> {rel_to.parent}/")
+            try:
+                rel_to = Path(item["to"]).relative_to(result.get("root_path", ""))
+                lines.append(f"  {item['name']}  ->  {rel_to.parent}/")
+            except ValueError:
+                lines.append(f"  {item['name']}  ->  {Path(item['to']).parent.name}/")
         if len(moved) > 20:
             lines.append(f"  ... 외 {len(moved) - 20}개")
 
     if failed:
-        lines.append(f"\n[실패] {len(failed)}개:")
+        lines.append(f"\n일부 파일은 옮기지 못했어요 ({len(failed)}개):")
         for item in failed[:5]:
             lines.append(f"  {item['name']}: {item['error']}")
 
-    lines.append("\n되돌리려면 /undo")
+    lines.append("\n되돌리고 싶으면 /undo")
     return "\n".join(lines)
 
 
 def format_undo_result(result: dict) -> str:
     if "error" in result:
-        return f"[실패] {result['error']}"
+        return f"{result['error']}"
 
     restored = result.get("restored", [])
     failed = result.get("failed", [])
 
-    lines = [f"[되돌리기 완료] {len(restored)}개 파일 원위치"]
+    lines = [f"원래대로 돌려놨어요. ({len(restored)}개 파일)"]
 
     if failed:
-        lines.append(f"[실패] {len(failed)}개:")
+        lines.append(f"\n일부 파일은 되돌리지 못했어요 ({len(failed)}개):")
         for item in failed:
             lines.append(f"  {item['name']}: {item['error']}")
 

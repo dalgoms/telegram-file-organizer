@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from openai import OpenAI
 from scanner import FileInfo
 from config import OPENAI_API_KEY
@@ -86,28 +87,27 @@ def classify_files(files: list[FileInfo], custom_instruction: str = "") -> dict 
 def format_classification(result: dict, root_path: str) -> str:
     """분류 결과를 텔레그램 미리보기 메시지로 포맷한다."""
     if not result:
-        return "[분류 실패] OpenAI API 키가 설정되지 않았습니다."
+        return "OpenAI API 키가 설정되지 않았어요.\n.env 파일의 OPENAI_API_KEY를 확인해주세요."
 
     if "error" in result:
-        return f"[분류 실패] {result['error']}"
+        return f"분류 중 문제가 생겼어요: {result['error']}"
 
     folders = result.get("folders", {})
     reasoning = result.get("reasoning", "")
 
-    lines = [f"[AI 분류 결과] {root_path}", ""]
+    folder_name = Path(root_path).name if root_path else ""
+    lines = [f"--- '{folder_name}' 정리 미리보기 ---", ""]
 
     total = 0
     for folder, file_list in folders.items():
         lines.append(f"/{folder}/")
         for fname in file_list:
-            lines.append(f"  -> {fname}")
+            lines.append(f"  {fname}")
             total += 1
         lines.append("")
 
-    lines.append(f"총 {total}개 파일 -> {len(folders)}개 폴더로 정리")
+    lines.append(f"총 {total}개 파일을 {len(folders)}개 폴더로 정리해요.")
     if reasoning:
-        lines.append(f"\n분류 근거: {reasoning}")
-
-    lines.append("\n이대로 정리할까요? /run 으로 실행")
+        lines.append(f"\nAI 판단: {reasoning}")
 
     return "\n".join(lines)

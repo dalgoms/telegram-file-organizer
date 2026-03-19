@@ -21,5 +21,23 @@ SKIP_FILES = {
 
 MAX_FILES_PER_SCAN = 500
 
+BLOCKED_PATHS = {
+    "C:\\Windows", "C:\\Program Files", "C:\\Program Files (x86)",
+    "C:\\ProgramData", "C:\\Recovery", "C:\\System Volume Information",
+    "/usr", "/bin", "/sbin", "/etc", "/var", "/boot", "/sys", "/proc",
+    "/System", "/Library",
+}
+
 HISTORY_FILE = os.path.join(os.path.dirname(__file__), "history.json")
 RULES_FILE = os.path.join(os.path.dirname(__file__), "rules.json")
+
+HOME_DIR = os.path.expanduser("~")
+QUICK_PATHS = {
+    "desktop": os.path.join(HOME_DIR, "Desktop"),
+    "downloads": os.path.join(HOME_DIR, "Downloads"),
+    "documents": os.path.join(HOME_DIR, "Documents"),
+    "pictures": os.path.join(HOME_DIR, "Pictures"),
+}
+for _alias, _path in list(QUICK_PATHS.items()):
+    if not os.path.isdir(_path):
+        QUICK_PATHS.pop(_alias)

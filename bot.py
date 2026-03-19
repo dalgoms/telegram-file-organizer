@@ -1,10 +1,12 @@
 import logging
+import time
+from pathlib import Path
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     ApplicationBuilder, CommandHandler, CallbackQueryHandler,
     MessageHandler, ContextTypes, filters,
 )
-from config import TELEGRAM_BOT_TOKEN, DEVICE_NAME
+from config import TELEGRAM_BOT_TOKEN, DEVICE_NAME, BLOCKED_PATHS, QUICK_PATHS
 from scanner import scan_local, format_scan_summary
 from classifier import classify_files, format_classification
 from organizer import (
@@ -56,75 +58,75 @@ LAST_SCANS: dict[int, "ScanResult"] = {}
 TAG = f"[{DEVICE_NAME}]"  # 모든 응답 앞에 기기 표시
 
 
+def _build_quick_path_lines(prefix: str = "/scan") -> str:
+    """현재 PC에 존재하는 폴더만 자동으로 경로 안내를 생성한다."""
+    labels = {
+        "desktop": "바탕화면", "downloads": "다운로드",
+        "documents": "문서", "pictures": "사진",
+    }
+    lines = []
+    for key, path in QUICK_PATHS.items():
+        label = labels.get(key, key)
+        lines.append(f"  {prefix} {path}  ({label})")
+    return "\n".join(lines)
+
+
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    quick = _build_quick_path_lines()
     text = (
-        f"{TAG} File Organizer Bot\n"
-        "텔레그램에서 폴더 경로를 보내면 AI가 정리해드립니다.\n\n"
-        "[기본]\n"
-        "/scan 경로 — 폴더 스캔 + AI 분류\n"
-        "/run — 분류안대로 정리 실행\n"
-        "/undo — 되돌리기\n\n"
-        "[분석 (장기 근속자 필수)]\n"
-        "/dup 경로 — 중복 파일 찾기\n"
-        "/ver 경로 — 최종_수정_진짜최종 탐지\n"
-        "/size 경로 — 용량 먹는 파일 분석\n"
-        "/old 경로 — 연도별 아카이브 제안\n"
-        "/find 키워드 — 파일 검색\n"
-        "/report 경로 — 종합 리포트\n\n"
-        "[기타]\n"
-        "/rule — 커스텀 규칙\n"
-        "/history — 정리 이력\n"
-        "/gdrive — 구글 드라이브\n\n"
-        f"현재 연결된 기기: {DEVICE_NAME}\n\n"
-        "[자주 쓰는 경로]\n"
-        "/scan C:\\Users\\Windows11 Pro\\Desktop — 바탕화면\n"
-        "/scan C:\\Users\\Windows11 Pro\\Downloads — 다운로드\n"
-        "/scan C:\\Users\\Windows11 Pro\\Documents — 문서\n"
-        "/scan C:\\Users\\Windows11 Pro\\Pictures — 사진\n"
-        "/report 경로 — 한번에 종합 진단"
+        f"{TAG} 안녕하세요!\n"
+        "폴더 경로를 보내주시면,\n"
+        "AI가 알아서 깔끔하게 정리해드려요.\n\n"
+        "정리 전에 미리보기를 먼저 보여드리고,\n"
+        "확인하신 후에만 실행돼요.\n"
+        "실수해도 /undo 한 번이면 원래대로 돌아와요.\n\n"
+        "--- 바로 시작하기 ---\n"
+        "아래 경로를 복사해서 보내보세요.\n\n"
+        f"{quick}\n\n"
+        "--- 폴더 진단만 하기 ---\n"
+        f"  /report {QUICK_PATHS.get('downloads', '경로')}  (종합 리포트)\n\n"
+        "전체 명령어가 궁금하면 /help"
     )
     await update.message.reply_text(text)
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    quick = _build_quick_path_lines()
     text = (
-        "[명령어 가이드]\n\n"
-        "--- 정리 ---\n"
-        "/scan 경로 — AI 분류 미리보기\n"
-        "/scan 경로 -r — 하위 폴더 포함\n"
-        "/run — 분류안 실행\n"
-        "/undo — 되돌리기\n"
-        "/history — 정리 이력\n\n"
-        "--- 분석 ---\n"
-        "/dup 경로 — 중복 파일 탐지\n"
-        "  같은 파일이 여러 곳에 있는지 찾습니다\n"
-        "/ver 경로 — 버전 체인 분석\n"
-        "  보고서_최종, 보고서_수정, 보고서_v2 등 탐지\n"
-        "/size 경로 — 용량 분석\n"
-        "  용량 TOP 파일 + 확장자별 통계\n"
-        "/old 경로 — 아카이브 제안\n"
-        "  올해가 아닌 파일을 연도별로 정리 제안\n"
-        "/find 키워드 — 파일 검색\n"
-        "  마지막 스캔 결과에서 파일명 검색\n\n"
-        "--- 설정 ---\n"
-        "/rule — 커스텀 규칙 목록\n"
-        "/rule 패턴 폴더 — 규칙 추가\n"
-        "/delrule 패턴 — 규칙 삭제\n"
-        "/gdrive 폴더ID — 드라이브 정리\n\n"
-        "폴더 경로만 보내도 /scan 으로 동작합니다.\n\n"
-        "[자주 쓰는 경로]\n"
-        "/scan C:\\Users\\Windows11 Pro\\Desktop — 바탕화면\n"
-        "/scan C:\\Users\\Windows11 Pro\\Downloads — 다운로드\n"
-        "/scan C:\\Users\\Windows11 Pro\\Documents — 문서\n"
-        "/scan C:\\Users\\Windows11 Pro\\Pictures — 사진\n"
-        "/report 경로 — 한번에 종합 진단"
+        f"{TAG} 사용 가이드\n\n"
+        "1. 폴더 정리하기\n"
+        "  /scan 경로      폴더를 분석해요\n"
+        "  /scan 경로 -r   하위 폴더까지 포함\n"
+        "  → AI가 분류안을 보여드려요\n"
+        "  → '정리 실행' 버튼 또는 /run\n"
+        "  → 실수했다면 /undo\n\n"
+        "2. 내 폴더 진단하기\n"
+        "  /report 경로    한번에 종합 진단\n"
+        "  /dup 경로       같은 파일 중복 찾기\n"
+        "  /ver 경로       보고서_최종_수정 같은 버전 찾기\n"
+        "  /size 경로      용량 많이 차지하는 파일\n"
+        "  /old 경로       오래된 파일 연도별 정리 제안\n"
+        "  /find 키워드    파일 이름으로 검색\n\n"
+        "3. 나만의 규칙 만들기\n"
+        "  /rule               등록된 규칙 보기\n"
+        "  /rule *.pptx 문서   확장자별 폴더 지정\n"
+        "  /delrule *.pptx     규칙 삭제\n\n"
+        "4. 구글 드라이브\n"
+        "  /gdrive 폴더ID  드라이브 폴더도 정리\n\n"
+        "/history  정리한 이력 보기\n\n"
+        "--- 이 PC 바로가기 ---\n"
+        f"{quick}"
     )
     await update.message.reply_text(text)
 
 
 async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
-        await update.message.reply_text("경로를 입력해주세요.\n예: /scan D:\\Downloads")
+        quick = _build_quick_path_lines()
+        await update.message.reply_text(
+            "정리할 폴더 경로를 알려주세요.\n\n"
+            f"--- 이 PC 바로가기 ---\n{quick}"
+        )
         return
 
     recursive = False
@@ -134,7 +136,17 @@ async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         raw_args.pop()
     args = " ".join(raw_args)
 
-    await update.message.reply_text(f"{TAG} 스캔 중... {args}")
+    resolved = str(Path(args).resolve())
+    for blocked in BLOCKED_PATHS:
+        if resolved.lower().startswith(blocked.lower()):
+            await update.message.reply_text(
+                f"{TAG} [차단] 시스템 폴더는 정리할 수 없습니다: {args}\n"
+                "바탕화면, 다운로드, 문서, 사진 등 개인 폴더를 사용해주세요."
+            )
+            return
+
+    folder_name = Path(args).name or args
+    await update.message.reply_text(f"{TAG} '{folder_name}' 폴더를 살펴보고 있어요...")
 
     scan_result = scan_local(args, recursive=recursive)
     summary = format_scan_summary(scan_result)
@@ -143,7 +155,8 @@ async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if scan_result.error or not scan_result.files:
         return
 
-    await update.message.reply_text("AI 분류 분석 중...")
+    file_count = len([f for f in scan_result.files if not f.is_dir])
+    await update.message.reply_text(f"파일 {file_count}개를 AI가 분류하고 있어요...")
 
     files = scan_result.files
     classification = classify_files(files)
@@ -160,27 +173,34 @@ async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await safe_reply(update.message, preview)
 
     user_id = update.effective_user.id
+    scan_ts = int(time.time())
     LAST_SCANS[user_id] = scan_result
     PENDING_SCANS[user_id] = {
         "root_path": scan_result.root_path,
         "classification": classification,
         "type": "local",
+        "scan_ts": scan_ts,
     }
 
+    folder_count = len(classification.get("folders", {}))
     keyboard = [
         [
-            InlineKeyboardButton("정리 실행", callback_data="run_organize"),
-            InlineKeyboardButton("취소", callback_data="cancel_organize"),
+            InlineKeyboardButton(
+                f"{folder_count}개 폴더로 정리하기",
+                callback_data=f"run_organize:{scan_ts}",
+            ),
+            InlineKeyboardButton("그만두기", callback_data="cancel_organize"),
         ]
     ]
     await update.message.reply_text(
-        "위 분류대로 정리할까요?",
+        "위 분류가 마음에 드시면 '정리하기'를 눌러주세요.\n"
+        "잘못되면 /undo 로 바로 되돌릴 수 있어요.",
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
 
 
 # ---------------------------------------------------------------------------
-# 분석 명령어 (장기 근속자를 위한 핵심 기능)
+# 분석 명령어
 # ---------------------------------------------------------------------------
 
 async def _scan_for_analysis(update, context, recursive=False):
@@ -188,8 +208,22 @@ async def _scan_for_analysis(update, context, recursive=False):
     user_id = update.effective_user.id
 
     if context.args:
-        path = " ".join(context.args)
-        await update.message.reply_text(f"{TAG} 스캔 중... {path}")
+        raw_args = list(context.args)
+        if raw_args and raw_args[-1] == "-r":
+            recursive = True
+            raw_args.pop()
+        path = " ".join(raw_args)
+
+        resolved = str(Path(path).resolve())
+        for blocked in BLOCKED_PATHS:
+            if resolved.lower().startswith(blocked.lower()):
+                await update.message.reply_text(
+                    f"{TAG} [차단] 시스템 폴더는 분석할 수 없습니다: {path}"
+                )
+                return None
+
+        folder_name = Path(path).name or path
+        await update.message.reply_text(f"{TAG} '{folder_name}' 폴더를 살펴보고 있어요...")
         scan_result = scan_local(path, recursive=recursive)
         if scan_result.error:
             await update.message.reply_text(f"{TAG} [스캔 실패] {scan_result.error}")
@@ -200,7 +234,10 @@ async def _scan_for_analysis(update, context, recursive=False):
     if user_id in LAST_SCANS:
         return LAST_SCANS[user_id]
 
-    await update.message.reply_text(f"{TAG} 경로를 입력하거나 먼저 /scan 을 실행해주세요.")
+    await update.message.reply_text(
+        f"{TAG} 분석할 폴더 경로를 함께 보내주세요.\n"
+        "예: /dup C:\\Users\\이름\\Downloads"
+    )
     return None
 
 
@@ -208,7 +245,7 @@ async def dup_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     scan = await _scan_for_analysis(update, context)
     if not scan:
         return
-    await update.message.reply_text(f"{TAG} 중복 파일 분석 중...")
+    await update.message.reply_text(f"{TAG} 같은 파일이 여러 곳에 있는지 찾고 있어요...")
     groups = find_duplicates(scan)
     await safe_reply(update.message, f"{TAG}\n{format_duplicates(groups)}")
 
@@ -238,14 +275,21 @@ async def old_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def find_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
-        await update.message.reply_text("검색어를 입력하세요.\n예: /find 보고서")
+        await update.message.reply_text(
+            "어떤 파일을 찾으시나요?\n"
+            "예: /find 보고서\n"
+            "예: /find KOBA"
+        )
         return
 
     user_id = update.effective_user.id
     keyword = " ".join(context.args)
 
     if user_id not in LAST_SCANS:
-        await update.message.reply_text(f"{TAG} 먼저 /scan 으로 폴더를 스캔해주세요.")
+        await update.message.reply_text(
+            f"{TAG} 먼저 /scan 으로 폴더를 스캔해주세요.\n"
+            "스캔한 결과 안에서 파일을 검색해드려요."
+        )
         return
 
     results = search_files(LAST_SCANS[user_id], keyword)
@@ -258,7 +302,8 @@ async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not scan:
         return
 
-    await update.message.reply_text(f"{TAG} [종합 리포트] {scan.root_path}\n분석 중...")
+    folder_name = Path(scan.root_path).name or scan.root_path
+    await update.message.reply_text(f"{TAG} '{folder_name}' 폴더를 종합 진단하고 있어요...")
 
     summary = format_scan_summary(scan)
     await safe_reply(update.message, f"{TAG}\n{summary}")
@@ -266,7 +311,7 @@ async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     size_text = analyze_size(scan)
     await safe_reply(update.message, f"{TAG}\n{size_text}")
 
-    await update.message.reply_text(f"{TAG} 중복 파일 검사 중...")
+    await update.message.reply_text(f"{TAG} 중복 파일을 찾고 있어요...")
     groups = find_duplicates(scan)
     await safe_reply(update.message, f"{TAG}\n{format_duplicates(groups)}")
 
@@ -282,7 +327,20 @@ async def run_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     pending = PENDING_SCANS.get(user_id)
 
     if not pending:
-        await update.message.reply_text("먼저 /scan 으로 폴더를 스캔해주세요.")
+        await update.message.reply_text(
+            "정리할 내용이 없어요.\n"
+            "먼저 /scan 으로 폴더를 스캔해주세요."
+        )
+        return
+
+    elapsed = time.time() - pending.get("scan_ts", time.time())
+    if elapsed > STALE_SCAN_THRESHOLD:
+        mins = int(elapsed // 60)
+        PENDING_SCANS.pop(user_id, None)
+        await update.message.reply_text(
+            f"{mins}분이 지나서 파일이 바뀌었을 수 있어요.\n"
+            "안전하게 /scan 으로 다시 스캔해주세요."
+        )
         return
 
     await _execute_pending(update.message, user_id)
@@ -313,21 +371,51 @@ async def _execute_pending(message_or_query, user_id: int):
         await message_or_query.edit_message_text(text)
 
 
+STALE_SCAN_THRESHOLD = 300  # 5분 경과 시 경고
+
 async def organize_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     user_id = update.effective_user.id
 
-    if query.data == "run_organize":
-        await query.edit_message_text("정리 실행 중...")
+    if query.data.startswith("run_organize"):
+        parts = query.data.split(":")
+        btn_ts = int(parts[1]) if len(parts) > 1 else 0
+
+        pending = PENDING_SCANS.get(user_id)
+        if not pending:
+            await query.edit_message_text(
+                "스캔 결과가 만료되었어요.\n"
+                "다시 /scan 으로 폴더를 스캔해주세요."
+            )
+            return
+
+        if btn_ts and pending.get("scan_ts") != btn_ts:
+            await query.edit_message_text(
+                "이 버튼은 이전 스캔 결과예요.\n"
+                "아래쪽에 최신 버튼이 있어요."
+            )
+            return
+
+        elapsed = time.time() - pending.get("scan_ts", time.time())
+        if elapsed > STALE_SCAN_THRESHOLD:
+            mins = int(elapsed // 60)
+            await query.edit_message_text(
+                f"{mins}분이 지나서 파일이 바뀌었을 수 있어요.\n"
+                "안전하게 /scan 으로 다시 스캔해주세요."
+            )
+            PENDING_SCANS.pop(user_id, None)
+            return
+
+        await query.edit_message_text("정리하고 있어요...")
         await _execute_pending(query, user_id)
     elif query.data == "cancel_organize":
         PENDING_SCANS.pop(user_id, None)
-        await query.edit_message_text("정리를 취소했습니다.")
+        await query.edit_message_text("취소했어요. 파일은 그대로예요.")
 
 
 async def undo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("되돌리는 중...")
+    await update.message.reply_text("원래대로 되돌리고 있어요...")
     result = undo_last()
     await update.message.reply_text(format_undo_result(result))
 
@@ -390,7 +478,8 @@ async def gdrive_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     summary = format_scan_summary(scan_result)
     await update.message.reply_text(summary)
 
-    await update.message.reply_text("AI 분류 분석 중...")
+    file_count = len([f for f in scan_result.files if not f.is_dir])
+    await update.message.reply_text(f"파일 {file_count}개를 AI가 분류하고 있어요...")
     classification = classify_files(scan_result.files)
 
     if not classification or "error" in (classification or {}):
@@ -404,15 +493,17 @@ async def gdrive_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(preview)
 
     user_id = update.effective_user.id
+    scan_ts = int(time.time())
     PENDING_SCANS[user_id] = {
         "root_path": scan_result.root_path,
         "classification": classification,
         "type": "gdrive",
+        "scan_ts": scan_ts,
     }
 
     keyboard = [
         [
-            InlineKeyboardButton("정리 실행", callback_data="run_organize"),
+            InlineKeyboardButton("정리 실행", callback_data=f"run_organize:{scan_ts}"),
             InlineKeyboardButton("취소", callback_data="cancel_organize"),
         ]
     ]
@@ -437,9 +528,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         context.args = text.split()
         await scan_command(update, context)
     else:
+        quick = _build_quick_path_lines()
         await update.message.reply_text(
-            "폴더 경로를 입력하거나 /scan 명령어를 사용해주세요.\n"
-            "도움말: /help"
+            "정리할 폴더 경로를 보내주세요.\n\n"
+            f"--- 이 PC 바로가기 ---\n{quick}\n\n"
+            "사용법이 궁금하면 /help"
         )
 
 

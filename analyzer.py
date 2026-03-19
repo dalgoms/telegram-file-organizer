@@ -15,7 +15,7 @@ from datetime import datetime
 from collections import defaultdict
 from dataclasses import dataclass, field
 
-from scanner import FileInfo, ScanResult, scan_local
+from scanner import FileInfo, ScanResult
 
 
 # ---------------------------------------------------------------------------
