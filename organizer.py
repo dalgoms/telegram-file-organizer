@@ -182,18 +182,30 @@ def format_result(result: dict) -> str:
     moved = result.get("moved", [])
     failed = result.get("failed", [])
 
-    lines = [f"깔끔하게 정리했어요! ({len(moved)}개 파일)"]
+    folders_used = set()
+    for item in moved:
+        try:
+            rel = Path(item["to"]).relative_to(result.get("root_path", ""))
+            folders_used.add(str(rel.parent))
+        except ValueError:
+            folders_used.add(Path(item["to"]).parent.name)
+
+    lines = [
+        f"깔끔하게 정리했어요!",
+        "",
+        f"  파일 {len(moved)}개  ->  폴더 {len(folders_used)}개로 정돈",
+    ]
 
     if moved:
         lines.append("")
-        for item in moved[:20]:
+        for item in moved[:15]:
             try:
                 rel_to = Path(item["to"]).relative_to(result.get("root_path", ""))
                 lines.append(f"  {item['name']}  ->  {rel_to.parent}/")
             except ValueError:
                 lines.append(f"  {item['name']}  ->  {Path(item['to']).parent.name}/")
-        if len(moved) > 20:
-            lines.append(f"  ... 외 {len(moved) - 20}개")
+        if len(moved) > 15:
+            lines.append(f"  ... 외 {len(moved) - 15}개")
 
     if failed:
         lines.append(f"\n일부 파일은 옮기지 못했어요 ({len(failed)}개):")
@@ -201,6 +213,7 @@ def format_result(result: dict) -> str:
             lines.append(f"  {item['name']}: {item['error']}")
 
     lines.append("\n되돌리고 싶으면 /undo")
+    lines.append("/stats 로 누적 기록을 확인해보세요!")
     return "\n".join(lines)
 
 

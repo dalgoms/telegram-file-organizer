@@ -30,6 +30,8 @@ BLOCKED_PATHS = {
 
 HISTORY_FILE = os.path.join(os.path.dirname(__file__), "history.json")
 RULES_FILE = os.path.join(os.path.dirname(__file__), "rules.json")
+PATHS_FILE = os.path.join(os.path.dirname(__file__), "paths.json")
+STATS_FILE = os.path.join(os.path.dirname(__file__), "stats.json")
 
 HOME_DIR = os.path.expanduser("~")
 QUICK_PATHS = {

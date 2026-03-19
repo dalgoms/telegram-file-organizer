@@ -6,6 +6,7 @@ from telegram.ext import (
     ApplicationBuilder, CommandHandler, CallbackQueryHandler,
     MessageHandler, ContextTypes, filters,
 )
+from datetime import datetime
 from config import TELEGRAM_BOT_TOKEN, DEVICE_NAME, BLOCKED_PATHS, QUICK_PATHS
 from scanner import scan_local, format_scan_summary
 from classifier import classify_files, format_classification
@@ -24,6 +25,17 @@ from analyzer import (
     analyze_size,
     suggest_archive, format_archive_suggestion,
     search_files, format_search_results,
+)
+from shortcuts import (
+    add_path, remove_path, resolve_alias, format_paths,
+)
+from stats import (
+    record_organize, record_undo, record_duplicates,
+    format_stats, format_achievement, get_title, _load as load_stats,
+)
+from scheduler import (
+    add_schedule, remove_schedule, format_schedules,
+    get_due_schedules,
 )
 
 logging.basicConfig(
@@ -85,6 +97,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"{quick}\n\n"
         "--- 폴더 진단만 하기 ---\n"
         f"  /report {QUICK_PATHS.get('downloads', '경로')}  (종합 리포트)\n\n"
+        "/stats 로 정리 기록과 업적도 확인해보세요!\n"
         "전체 명령어가 궁금하면 /help"
     )
     await update.message.reply_text(text)
@@ -113,7 +126,12 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "  /delrule *.pptx     규칙 삭제\n\n"
         "4. 구글 드라이브\n"
         "  /gdrive 폴더ID  드라이브 폴더도 정리\n\n"
-        "/history  정리한 이력 보기\n\n"
+        "5. 편의 기능\n"
+        "  /path               경로 바로가기 보기\n"
+        "  /path 이름 경로     바로가기 등록\n"
+        "  /schedule           예약 스캔 관리\n"
+        "  /stats              정리 기록 + 업적\n"
+        "  /history            정리 이력\n\n"
         "--- 이 PC 바로가기 ---\n"
         f"{quick}"
     )
@@ -134,7 +152,7 @@ async def scan_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if raw_args and raw_args[-1] == "-r":
         recursive = True
         raw_args.pop()
-    args = " ".join(raw_args)
+    args = resolve_alias(" ".join(raw_args))
 
     resolved = str(Path(args).resolve())
     for blocked in BLOCKED_PATHS:
@@ -212,7 +230,7 @@ async def _scan_for_analysis(update, context, recursive=False):
         if raw_args and raw_args[-1] == "-r":
             recursive = True
             raw_args.pop()
-        path = " ".join(raw_args)
+        path = resolve_alias(" ".join(raw_args))
 
         resolved = str(Path(path).resolve())
         for blocked in BLOCKED_PATHS:
@@ -247,6 +265,8 @@ async def dup_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     await update.message.reply_text(f"{TAG} 같은 파일이 여러 곳에 있는지 찾고 있어요...")
     groups = find_duplicates(scan)
+    if groups:
+        record_duplicates(len(groups))
     await safe_reply(update.message, f"{TAG}\n{format_duplicates(groups)}")
 
 
@@ -356,19 +376,30 @@ async def _execute_pending(message_or_query, user_id: int):
             pending["root_path"].replace("gdrive://", ""),
             pending["classification"],
         )
-        moved = len(result.get("moved", []))
+        moved_count = len(result.get("moved", []))
         failed = len(result.get("failed", []))
-        text = f"[드라이브 정리 완료] {moved}개 이동"
+        text = f"[드라이브 정리 완료] {moved_count}개 이동"
         if failed:
             text += f", {failed}개 실패"
     else:
         result = execute_organization(pending["root_path"], pending["classification"])
+        moved_count = len(result.get("moved", []))
         text = format_result(result)
 
-    if hasattr(message_or_query, "reply_text"):
-        await message_or_query.reply_text(text)
-    else:
-        await message_or_query.edit_message_text(text)
+    reply_func = (message_or_query.reply_text
+                  if hasattr(message_or_query, "reply_text")
+                  else message_or_query.edit_message_text)
+    await reply_func(text)
+
+    if moved_count > 0:
+        new_achievements = record_organize(moved_count)
+        for ach_key in new_achievements:
+            ach_text = format_achievement(ach_key)
+            if hasattr(message_or_query, "reply_text"):
+                await message_or_query.reply_text(ach_text)
+            else:
+                chat_id = message_or_query.message.chat_id
+                await message_or_query._bot.send_message(chat_id, ach_text)
 
 
 STALE_SCAN_THRESHOLD = 300  # 5분 경과 시 경고
@@ -418,6 +449,10 @@ async def undo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("원래대로 되돌리고 있어요...")
     result = undo_last()
     await update.message.reply_text(format_undo_result(result))
+    if not result.get("error"):
+        new_achievements = record_undo()
+        for ach_key in new_achievements:
+            await update.message.reply_text(format_achievement(ach_key))
 
 
 async def history_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -513,6 +548,127 @@ async def gdrive_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+# ---------------------------------------------------------------------------
+# 즐겨찾기 경로
+# ---------------------------------------------------------------------------
+
+async def path_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        await update.message.reply_text(format_paths())
+        return
+    if len(context.args) < 2:
+        await update.message.reply_text(
+            "별칭과 경로를 함께 입력해주세요.\n"
+            "예: /path 프로젝트 D:\\작업\\2026프로젝트"
+        )
+        return
+    alias = context.args[0]
+    full_path = " ".join(context.args[1:])
+    if not Path(full_path).exists():
+        await update.message.reply_text(f"'{full_path}' 경로가 존재하지 않아요.\n경로를 확인해주세요.")
+        return
+    result = add_path(alias, str(Path(full_path).resolve()))
+    await update.message.reply_text(result)
+
+
+async def delpath_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        await update.message.reply_text("삭제할 별칭을 입력해주세요.\n예: /delpath 프로젝트")
+        return
+    result = remove_path(context.args[0])
+    await update.message.reply_text(result)
+
+
+# ---------------------------------------------------------------------------
+# 통계 + 업적
+# ---------------------------------------------------------------------------
+
+async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(format_stats())
+
+
+# ---------------------------------------------------------------------------
+# 예약 스캔
+# ---------------------------------------------------------------------------
+
+async def schedule_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    if not context.args:
+        await update.message.reply_text(format_schedules(user_id))
+        return
+
+    if len(context.args) < 3:
+        await update.message.reply_text(
+            "형식: /schedule 경로 요일 시:분\n\n"
+            "예: /schedule 다운로드 금 17:00\n"
+            "예: /schedule D:\\Downloads 매일 09:00"
+        )
+        return
+
+    raw = list(context.args)
+    time_str = raw.pop()
+    day_str = raw.pop()
+    path = resolve_alias(" ".join(raw))
+
+    try:
+        parts = time_str.split(":")
+        hour, minute = int(parts[0]), int(parts[1]) if len(parts) > 1 else 0
+        if not (0 <= hour <= 23 and 0 <= minute <= 59):
+            raise ValueError
+    except (ValueError, IndexError):
+        await update.message.reply_text("시간 형식이 맞지 않아요.\n예: 17:00, 09:30")
+        return
+
+    result = add_schedule(user_id, path, day_str, hour, minute)
+    await update.message.reply_text(result)
+
+
+async def unschedule_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    if not context.args:
+        await update.message.reply_text(format_schedules(user_id))
+        return
+    try:
+        idx = int(context.args[0])
+    except ValueError:
+        await update.message.reply_text("삭제할 예약 번호를 입력해주세요.\n예: /unschedule 1")
+        return
+    result = remove_schedule(user_id, idx)
+    await update.message.reply_text(result)
+
+
+async def _scheduled_scan_job(context: ContextTypes.DEFAULT_TYPE):
+    """매 분마다 실행되어 예약된 스캔을 처리한다."""
+    now = datetime.now()
+    due = get_due_schedules(now.weekday(), now.hour, now.minute)
+
+    for schedule in due:
+        user_id = schedule["user_id"]
+        path = schedule["path"]
+        try:
+            scan_result = scan_local(path)
+            if scan_result.error or not scan_result.files:
+                continue
+
+            file_count = len([f for f in scan_result.files if not f.is_dir])
+            summary = format_scan_summary(scan_result)
+
+            folder_name = Path(path).name or path
+            text = (
+                f"{TAG} [예약 스캔] '{folder_name}'\n"
+                f"파일 {file_count}개가 있어요.\n\n"
+                f"{summary}\n\n"
+                f"정리하려면: /scan {path}"
+            )
+            await context.bot.send_message(user_id, text)
+        except Exception as e:
+            logger.error(f"Scheduled scan failed for {path}: {e}")
+
+
+# ---------------------------------------------------------------------------
+# 메시지 핸들러
+# ---------------------------------------------------------------------------
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """일반 메시지로 경로를 보내면 /scan과 동일하게 처리한다."""
     text = update.message.text.strip()
@@ -558,8 +714,15 @@ def main():
     app.add_handler(CommandHandler("old", old_command))
     app.add_handler(CommandHandler("find", find_command))
     app.add_handler(CommandHandler("report", report_command))
+    app.add_handler(CommandHandler("path", path_command))
+    app.add_handler(CommandHandler("delpath", delpath_command))
+    app.add_handler(CommandHandler("stats", stats_command))
+    app.add_handler(CommandHandler("schedule", schedule_command))
+    app.add_handler(CommandHandler("unschedule", unschedule_command))
     app.add_handler(CallbackQueryHandler(organize_callback))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+
+    app.job_queue.run_repeating(_scheduled_scan_job, interval=60, first=10)
 
     print(f"File Organizer Bot 시작... [{DEVICE_NAME}]")
     app.run_polling()
