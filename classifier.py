@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 from openai import OpenAI
 from scanner import FileInfo
@@ -55,6 +56,9 @@ def classify_files(files: list[FileInfo], custom_instruction: str = "") -> dict 
     if not file_only:
         return None
 
+    if len(file_only) > 200:
+        file_only = file_only[:200]
+
     prompt = build_file_list_prompt(file_only)
     if custom_instruction:
         prompt += f"\n\n추가 지시: {custom_instruction}"
@@ -67,7 +71,7 @@ def classify_files(files: list[FileInfo], custom_instruction: str = "") -> dict 
                 {"role": "user", "content": prompt},
             ],
             temperature=0.2,
-            max_tokens=2000,
+            max_tokens=4000,
         )
 
         content = response.choices[0].message.content.strip()
@@ -78,10 +82,46 @@ def classify_files(files: list[FileInfo], custom_instruction: str = "") -> dict 
                 content = content[4:]
             content = content.strip()
 
-        return json.loads(content)
+        try:
+            return json.loads(content)
+        except json.JSONDecodeError:
+            repaired = _repair_json(content)
+            return json.loads(repaired)
 
-    except (json.JSONDecodeError, Exception) as e:
+    except json.JSONDecodeError as e:
+        return {"error": f"AI 응답을 해석하지 못했어요. 파일이 너무 많으면 -r 없이 시도해보세요."}
+    except Exception as e:
         return {"error": str(e)}
+
+
+def _repair_json(text: str) -> str:
+    """GPT가 max_tokens에 의해 잘린 JSON을 복구한다."""
+    text = text.strip()
+
+    if not text.startswith("{"):
+        idx = text.find("{")
+        if idx >= 0:
+            text = text[idx:]
+
+    open_braces = text.count("{") - text.count("}")
+    open_brackets = text.count("[") - text.count("]")
+    open_quotes = text.count('"') % 2
+
+    if open_quotes:
+        text += '"'
+
+    text += "]" * open_brackets
+    text += "}" * open_braces
+
+    if '"reasoning"' not in text:
+        text = text.rstrip("}")
+        if not text.endswith(","):
+            last_bracket = text.rfind("]")
+            if last_bracket > 0 and text[last_bracket + 1:].strip() == "":
+                pass
+        text += ', "reasoning": "잘린 응답 자동 복구"}'
+
+    return text
 
 
 def format_classification(result: dict, root_path: str) -> str:

@@ -66,6 +66,15 @@ async def safe_reply(message, text: str):
 
 PENDING_SCANS: dict[int, dict] = {}
 LAST_SCANS: dict[int, "ScanResult"] = {}
+FIND_RESULTS: dict[int, list] = {}
+
+
+def _format_size(size: int) -> str:
+    for unit in ["B", "KB", "MB", "GB"]:
+        if size < 1024:
+            return f"{size:.1f}{unit}"
+        size /= 1024
+    return f"{size:.1f}TB"
 
 TAG = f"[{DEVICE_NAME}]"  # 모든 응답 앞에 기기 표시
 
@@ -75,6 +84,7 @@ def _build_quick_path_lines(prefix: str = "/scan") -> str:
     labels = {
         "desktop": "바탕화면", "downloads": "다운로드",
         "documents": "문서", "pictures": "사진",
+        "music": "음악", "videos": "동영상",
     }
     lines = []
     for key, path in QUICK_PATHS.items():
@@ -315,6 +325,25 @@ async def find_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     results = search_files(LAST_SCANS[user_id], keyword)
     await safe_reply(update.message, f"{TAG}\n{format_search_results(results, keyword)}")
 
+    if results:
+        FIND_RESULTS[user_id] = results
+        keyboard = [
+            [
+                InlineKeyboardButton(
+                    f"검색된 {len(results)}개 파일 정리하기",
+                    callback_data="find_organize",
+                ),
+                InlineKeyboardButton(
+                    f"검색된 {len(results)}개 파일 삭제하기",
+                    callback_data="find_delete_ask",
+                ),
+            ]
+        ]
+        await update.message.reply_text(
+            "검색된 파일을 어떻게 할까요?",
+            reply_markup=InlineKeyboardMarkup(keyboard),
+        )
+
 
 async def report_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """폴더 종합 리포트: 스캔 + 중복 + 버전 + 용량 + 아카이브를 한 번에."""
@@ -443,6 +472,110 @@ async def organize_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif query.data == "cancel_organize":
         PENDING_SCANS.pop(user_id, None)
         await query.edit_message_text("취소했어요. 파일은 그대로예요.")
+
+    elif query.data == "find_organize":
+        files = FIND_RESULTS.pop(user_id, [])
+        if not files:
+            await query.edit_message_text("검색 결과가 만료되었어요. 다시 /find 해주세요.")
+            return
+
+        await query.edit_message_text(f"검색된 {len(files)}개 파일을 AI가 분류하고 있어요...")
+
+        classification = classify_files(files)
+        if not classification or "error" in (classification or {}):
+            await query.edit_message_text("분류에 실패했어요. 다시 시도해주세요.")
+            return
+
+        root_path = str(Path(files[0].path).parent)
+        classification = apply_rules(files, classification)
+        preview = format_classification(classification, root_path)
+
+        chat_id = query.message.chat_id
+        await context.bot.send_message(chat_id, preview)
+
+        scan_ts = int(time.time())
+        PENDING_SCANS[user_id] = {
+            "root_path": root_path,
+            "classification": classification,
+            "type": "local",
+            "scan_ts": scan_ts,
+        }
+
+        folder_count = len(classification.get("folders", {}))
+        keyboard = [
+            [
+                InlineKeyboardButton(
+                    f"{folder_count}개 폴더로 정리하기",
+                    callback_data=f"run_organize:{scan_ts}",
+                ),
+                InlineKeyboardButton("그만두기", callback_data="cancel_organize"),
+            ]
+        ]
+        await context.bot.send_message(
+            chat_id,
+            "위 분류가 마음에 드시면 '정리하기'를 눌러주세요.\n"
+            "잘못되면 /undo 로 바로 되돌릴 수 있어요.",
+            reply_markup=InlineKeyboardMarkup(keyboard),
+        )
+
+    elif query.data == "find_delete_ask":
+        files = FIND_RESULTS.get(user_id, [])
+        if not files:
+            await query.edit_message_text("검색 결과가 만료되었어요. 다시 /find 해주세요.")
+            return
+
+        total_size = sum(f.size_bytes for f in files)
+        size_str = _format_size(total_size)
+
+        keyboard = [
+            [
+                InlineKeyboardButton(
+                    f"정말 {len(files)}개 삭제할게요",
+                    callback_data="find_delete_confirm",
+                ),
+                InlineKeyboardButton("취소", callback_data="find_delete_cancel"),
+            ]
+        ]
+        await query.edit_message_text(
+            f"정말 삭제할까요? 이 작업은 되돌릴 수 없어요!\n\n"
+            f"  파일 {len(files)}개 (총 {size_str})\n\n"
+            + "\n".join(f"  {f.name}" for f in files[:10])
+            + (f"\n  ... 외 {len(files) - 10}개" if len(files) > 10 else ""),
+            reply_markup=InlineKeyboardMarkup(keyboard),
+        )
+
+    elif query.data == "find_delete_confirm":
+        files = FIND_RESULTS.pop(user_id, [])
+        if not files:
+            await query.edit_message_text("검색 결과가 만료되었어요.")
+            return
+
+        deleted = []
+        failed = []
+        for f in files:
+            try:
+                p = Path(f.path)
+                if p.exists() and p.is_file():
+                    p.unlink()
+                    deleted.append(f.name)
+                else:
+                    failed.append((f.name, "파일을 찾을 수 없음"))
+            except PermissionError:
+                failed.append((f.name, "사용 중인 파일"))
+            except Exception as e:
+                failed.append((f.name, str(e)))
+
+        lines = [f"삭제 완료! ({len(deleted)}개 파일)"]
+        if failed:
+            lines.append(f"\n일부 삭제 실패 ({len(failed)}개):")
+            for name, err in failed[:5]:
+                lines.append(f"  {name}: {err}")
+
+        await query.edit_message_text("\n".join(lines))
+
+    elif query.data == "find_delete_cancel":
+        FIND_RESULTS.pop(user_id, None)
+        await query.edit_message_text("삭제를 취소했어요. 파일은 그대로예요.")
 
 
 async def undo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):

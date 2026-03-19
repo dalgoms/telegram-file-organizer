@@ -39,6 +39,8 @@ QUICK_PATHS = {
     "downloads": os.path.join(HOME_DIR, "Downloads"),
     "documents": os.path.join(HOME_DIR, "Documents"),
     "pictures": os.path.join(HOME_DIR, "Pictures"),
+    "music": os.path.join(HOME_DIR, "Music"),
+    "videos": os.path.join(HOME_DIR, "Videos"),
 }
 for _alias, _path in list(QUICK_PATHS.items()):
     if not os.path.isdir(_path):

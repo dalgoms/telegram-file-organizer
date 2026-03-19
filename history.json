@@ -51,5 +51,825 @@
       }
     ],
     "failed": []
+  },
+  {
+    "session_id": "20260319_230901",
+    "root_path": "C:\\Users\\Windows11 Pro\\Downloads",
+    "timestamp": "2026-03-19T23:09:01.614723",
+    "moved": [
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\1766330938433.jpg",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\1766330938433.jpg",
+        "name": "1766330938433.jpg"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\1767358532589.jpg",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\1767358532589.jpg",
+        "name": "1767358532589.jpg"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\20251127_231134.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\20251127_231134.png",
+        "name": "20251127_231134.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\20251227_002500.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\20251227_002500.png",
+        "name": "20251227_002500.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\20251227_002516.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\20251227_002516.png",
+        "name": "20251227_002516.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\20251227_002540.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\20251227_002540.png",
+        "name": "20251227_002540.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\20251227_002608.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\20251227_002608.png",
+        "name": "20251227_002608.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\20251227_002624.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\20251227_002624.png",
+        "name": "20251227_002624.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 1월 6일 오후 09_52_42.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 1월 6일 오후 09_52_42.png",
+        "name": "ChatGPT Image 2026년 1월 6일 오후 09_52_42.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 08_39_50.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 08_39_50.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 08_39_50.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 08_44_54.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 08_44_54.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 08_44_54.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 08_45_29 (1).png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 08_45_29 (1).png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 08_45_29 (1).png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 08_45_29.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 08_45_29.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 08_45_29.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 08_47_39.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 08_47_39.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 08_47_39.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 08_53_10.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 08_53_10.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 08_53_10.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 09_08_42.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 09_08_42.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 09_08_42.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 09_09_47.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 09_09_47.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 09_09_47.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 09_13_33.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 09_13_33.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 09_13_33.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 09_22_48.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 09_22_48.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 09_22_48.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ChatGPT Image 2026년 3월 8일 오후 09_41_34.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\ChatGPT Image 2026년 3월 8일 오후 09_41_34.png",
+        "name": "ChatGPT Image 2026년 3월 8일 오후 09_41_34.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1.png",
+        "name": "Group 1.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320162.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320162.png",
+        "name": "Group 1321320162.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320310 (1).png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320310 (1).png",
+        "name": "Group 1321320310 (1).png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320310.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320310.png",
+        "name": "Group 1321320310.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320330.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320330.png",
+        "name": "Group 1321320330.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320355.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320355.png",
+        "name": "Group 1321320355.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320360.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320360.png",
+        "name": "Group 1321320360.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320374.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320374.png",
+        "name": "Group 1321320374.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320399.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320399.png",
+        "name": "Group 1321320399.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320400.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320400.png",
+        "name": "Group 1321320400.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320401.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320401.png",
+        "name": "Group 1321320401.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320406.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320406.png",
+        "name": "Group 1321320406.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320407.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320407.png",
+        "name": "Group 1321320407.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320408.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320408.png",
+        "name": "Group 1321320408.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320409.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320409.png",
+        "name": "Group 1321320409.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320410.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320410.png",
+        "name": "Group 1321320410.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320430.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320430.png",
+        "name": "Group 1321320430.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320435.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320435.png",
+        "name": "Group 1321320435.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320561 (1).png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320561 (1).png",
+        "name": "Group 1321320561 (1).png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320561 (2).png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320561 (2).png",
+        "name": "Group 1321320561 (2).png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320561.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320561.png",
+        "name": "Group 1321320561.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320562 (1).png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320562 (1).png",
+        "name": "Group 1321320562 (1).png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320562.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320562.png",
+        "name": "Group 1321320562.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320571 (1).png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320571 (1).png",
+        "name": "Group 1321320571 (1).png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320571 (2).png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320571 (2).png",
+        "name": "Group 1321320571 (2).png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320571.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320571.png",
+        "name": "Group 1321320571.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320573.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320573.png",
+        "name": "Group 1321320573.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320574.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320574.png",
+        "name": "Group 1321320574.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Group 1321320576 (1).png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\사진\\Group 1321320576 (1).png",
+        "name": "Group 1321320576 (1).png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\01 Table.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\01 Table.png",
+        "name": "01 Table.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\1_5x_loupe_2024_6606b060-904f-4bae-b3b9-5023eb5d2fc3.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\1_5x_loupe_2024_6606b060-904f-4bae-b3b9-5023eb5d2fc3.webp",
+        "name": "1_5x_loupe_2024_6606b060-904f-4bae-b3b9-5023eb5d2fc3.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\1_5x_loupe_2024_g2_53b4325e-d8a0-4eb5-9bf2-78f5ec4a9347 (1).webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\1_5x_loupe_2024_g2_53b4325e-d8a0-4eb5-9bf2-78f5ec4a9347 (1).webp",
+        "name": "1_5x_loupe_2024_g2_53b4325e-d8a0-4eb5-9bf2-78f5ec4a9347 (1).webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\1_5x_loupe_2024_g2_53b4325e-d8a0-4eb5-9bf2-78f5ec4a9347.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\1_5x_loupe_2024_g2_53b4325e-d8a0-4eb5-9bf2-78f5ec4a9347.webp",
+        "name": "1_5x_loupe_2024_g2_53b4325e-d8a0-4eb5-9bf2-78f5ec4a9347.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\25x-mounted-on-white_74c6a387-0b4d-4d26-b3c3-0752e3c5130e.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\25x-mounted-on-white_74c6a387-0b4d-4d26-b3c3-0752e3c5130e.webp",
+        "name": "25x-mounted-on-white_74c6a387-0b4d-4d26-b3c3-0752e3c5130e.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\25x-mounted_f61d042a-7172-419b-a601-716c8edf62fd.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\25x-mounted_f61d042a-7172-419b-a601-716c8edf62fd.webp",
+        "name": "25x-mounted_f61d042a-7172-419b-a601-716c8edf62fd.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\2_5x_flex_loupe_001_2024_8b146034-20f9-4b6c-ac00-cde4a496aefa.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\2_5x_flex_loupe_001_2024_8b146034-20f9-4b6c-ac00-cde4a496aefa.webp",
+        "name": "2_5x_flex_loupe_001_2024_8b146034-20f9-4b6c-ac00-cde4a496aefa.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\2_5x_flex_loupe_002_2024_cad73e75-698a-4837-8eb0-dacfd399081c.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\2_5x_flex_loupe_002_2024_cad73e75-698a-4837-8eb0-dacfd399081c.webp",
+        "name": "2_5x_flex_loupe_002_2024_cad73e75-698a-4837-8eb0-dacfd399081c.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\2_5x_flex_loupe_g2s_2024_94c1bea2-6dd0-4fe3-840d-c68cad26327c (1).webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\2_5x_flex_loupe_g2s_2024_94c1bea2-6dd0-4fe3-840d-c68cad26327c (1).webp",
+        "name": "2_5x_flex_loupe_g2s_2024_94c1bea2-6dd0-4fe3-840d-c68cad26327c (1).webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\2_5x_flex_loupe_g2s_2024_94c1bea2-6dd0-4fe3-840d-c68cad26327c.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\2_5x_flex_loupe_g2s_2024_94c1bea2-6dd0-4fe3-840d-c68cad26327c.webp",
+        "name": "2_5x_flex_loupe_g2s_2024_94c1bea2-6dd0-4fe3-840d-c68cad26327c.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\5_562eda76-d50d-442a-85d7-71ad92001ae6.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\5_562eda76-d50d-442a-85d7-71ad92001ae6.webp",
+        "name": "5_562eda76-d50d-442a-85d7-71ad92001ae6.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\amber0_f955394f-f868-4188-b645-ec3bc023e82a.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\amber0_f955394f-f868-4188-b645-ec3bc023e82a.webp",
+        "name": "amber0_f955394f-f868-4188-b645-ec3bc023e82a.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Amber1_3519bfd1-fac8-4c99-a415-0e654cead18c.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\Amber1_3519bfd1-fac8-4c99-a415-0e654cead18c.webp",
+        "name": "Amber1_3519bfd1-fac8-4c99-a415-0e654cead18c.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Amber2_96cc0e1d-4aaf-49a0-8102-c1b458fdb7e8.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\Amber2_96cc0e1d-4aaf-49a0-8102-c1b458fdb7e8.webp",
+        "name": "Amber2_96cc0e1d-4aaf-49a0-8102-c1b458fdb7e8.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bi-prod-fs-x2_4fd3aa22-4480-4349-9c2e-ff8fb5ff76fa.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bi-prod-fs-x2_4fd3aa22-4480-4349-9c2e-ff8fb5ff76fa.webp",
+        "name": "bi-prod-fs-x2_4fd3aa22-4480-4349-9c2e-ff8fb5ff76fa.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bi-prod-headlamp-1.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bi-prod-headlamp-1.webp",
+        "name": "bi-prod-headlamp-1.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bi-prod-headlamp-2.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bi-prod-headlamp-2.webp",
+        "name": "bi-prod-headlamp-2.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bi-prod-headlamp-3.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bi-prod-headlamp-3.webp",
+        "name": "bi-prod-headlamp-3.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-25x-002_b527a300-13b0-4408-8af3-11cde9e4c119.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-25x-002_b527a300-13b0-4408-8af3-11cde9e4c119.webp",
+        "name": "bilumix-25x-002_b527a300-13b0-4408-8af3-11cde9e4c119.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-35x-001_38ebf56c-e9d3-4b4a-b2b2-a231dff1276e.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-35x-001_38ebf56c-e9d3-4b4a-b2b2-a231dff1276e.webp",
+        "name": "bilumix-35x-001_38ebf56c-e9d3-4b4a-b2b2-a231dff1276e.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-battery-and-cradle.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-battery-and-cradle.webp",
+        "name": "bilumix-battery-and-cradle.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-battery-and-cradle_14cfc93f-4a2c-45e4-8481-1ea032616430.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-battery-and-cradle_14cfc93f-4a2c-45e4-8481-1ea032616430.webp",
+        "name": "bilumix-battery-and-cradle_14cfc93f-4a2c-45e4-8481-1ea032616430.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-battery-back.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-battery-back.webp",
+        "name": "bilumix-battery-back.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-battery-front.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-battery-front.webp",
+        "name": "bilumix-battery-front.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-battery-mounted.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-battery-mounted.webp",
+        "name": "bilumix-battery-mounted.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-g2s-35x-side.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-g2s-35x-side.webp",
+        "name": "bilumix-g2s-35x-side.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-g2s-4x-front.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-g2s-4x-front.webp",
+        "name": "bilumix-g2s-4x-front.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-g2s-4x-front_bf189b7b-2ea0-4e89-9724-21422fb66e0f.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-g2s-4x-front_bf189b7b-2ea0-4e89-9724-21422fb66e0f.webp",
+        "name": "bilumix-g2s-4x-front_bf189b7b-2ea0-4e89-9724-21422fb66e0f.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-g2s-fr.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-g2s-fr.webp",
+        "name": "bilumix-g2s-fr.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-g2s-front_7c841c12-52b5-4f38-8f13-5860d0c31ebf.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-g2s-front_7c841c12-52b5-4f38-8f13-5860d0c31ebf.webp",
+        "name": "bilumix-g2s-front_7c841c12-52b5-4f38-8f13-5860d0c31ebf.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-g2s-fs-top-front_20a73c15-5a71-43d6-9912-aa0a60440053.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-g2s-fs-top-front_20a73c15-5a71-43d6-9912-aa0a60440053.webp",
+        "name": "bilumix-g2s-fs-top-front_20a73c15-5a71-43d6-9912-aa0a60440053.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-x2-frame_75ac1bde-cad8-4215-83ab-52c2ace775a6.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-x2-frame_75ac1bde-cad8-4215-83ab-52c2ace775a6.webp",
+        "name": "bilumix-x2-frame_75ac1bde-cad8-4215-83ab-52c2ace775a6.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix-x2-shield_9ed75bb5-da0c-497f-9478-ac1b38047f52.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix-x2-shield_9ed75bb5-da0c-497f-9478-ac1b38047f52.webp",
+        "name": "bilumix-x2-shield_9ed75bb5-da0c-497f-9478-ac1b38047f52.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix_battery_md_001.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix_battery_md_001.webp",
+        "name": "bilumix_battery_md_001.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\bilumix_battery_md_002.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\bilumix_battery_md_002.webp",
+        "name": "bilumix_battery_md_002.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\frontplate-03_1fc83844-8777-4f6c-860e-9579c23d6009.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\frontplate-03_1fc83844-8777-4f6c-860e-9579c23d6009.webp",
+        "name": "frontplate-03_1fc83844-8777-4f6c-860e-9579c23d6009.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\frontplate.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\frontplate.webp",
+        "name": "frontplate.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\FS_1_0aa9b657-2ad1-4eea-8e39-0352c5405fc2.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\FS_1_0aa9b657-2ad1-4eea-8e39-0352c5405fc2.webp",
+        "name": "FS_1_0aa9b657-2ad1-4eea-8e39-0352c5405fc2.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen2-battery-craddle.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen2-battery-craddle.webp",
+        "name": "gen2-battery-craddle.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen3-15x_ec05f866-d296-4728-810a-610af868927e.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen3-15x_ec05f866-d296-4728-810a-610af868927e.webp",
+        "name": "gen3-15x_ec05f866-d296-4728-810a-610af868927e.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen3-25x-002_b490d093-eda1-49ac-875d-2169de411c30.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen3-25x-002_b490d093-eda1-49ac-875d-2169de411c30.webp",
+        "name": "gen3-25x-002_b490d093-eda1-49ac-875d-2169de411c30.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen3-25x-front_b298d1bc-3a11-43c5-bb15-ef883bc36a82.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen3-25x-front_b298d1bc-3a11-43c5-bb15-ef883bc36a82.webp",
+        "name": "gen3-25x-front_b298d1bc-3a11-43c5-bb15-ef883bc36a82.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen3-battery-02_af6ca94e-e002-4d82-a0c0-01d5cec00648.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen3-battery-02_af6ca94e-e002-4d82-a0c0-01d5cec00648.webp",
+        "name": "gen3-battery-02_af6ca94e-e002-4d82-a0c0-01d5cec00648.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen3-battery-dock_33302f62-0777-418e-8292-b33e56bd3b65.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen3-battery-dock_33302f62-0777-418e-8292-b33e56bd3b65.webp",
+        "name": "gen3-battery-dock_33302f62-0777-418e-8292-b33e56bd3b65.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen3-no-loupe_1e25d3c7-229b-4232-85d1-9c34e3b45356.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen3-no-loupe_1e25d3c7-229b-4232-85d1-9c34e3b45356.webp",
+        "name": "gen3-no-loupe_1e25d3c7-229b-4232-85d1-9c34e3b45356.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen3s-15x-closeup_dbb5b2d9-d94a-41ca-83c9-4f316e3da243.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen3s-15x-closeup_dbb5b2d9-d94a-41ca-83c9-4f316e3da243.webp",
+        "name": "gen3s-15x-closeup_dbb5b2d9-d94a-41ca-83c9-4f316e3da243.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen3s-15x_c66665b4-3e27-49c3-a8be-d89f038db354.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen3s-15x_c66665b4-3e27-49c3-a8be-d89f038db354.webp",
+        "name": "gen3s-15x_c66665b4-3e27-49c3-a8be-d89f038db354.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gen3s-no-loupe_145b00e1-5e67-459f-bb7e-7ba21de13dcf.webp",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\이미지\\스크린샷\\gen3s-no-loupe_145b00e1-5e67-459f-bb7e-7ba21de13dcf.webp",
+        "name": "gen3s-no-loupe_145b00e1-5e67-459f-bb7e-7ba21de13dcf.webp"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\2026_Marketing_Structural_Efficiency.pdf",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\보고서\\2026_Marketing_Structural_Efficiency.pdf",
+        "name": "2026_Marketing_Structural_Efficiency.pdf"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Absence_Rate_A_Market_Thermometer.pdf",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\보고서\\Absence_Rate_A_Market_Thermometer.pdf",
+        "name": "Absence_Rate_A_Market_Thermometer.pdf"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BiLumix_Professional_Lineup.pdf",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\보고서\\BiLumix_Professional_Lineup.pdf",
+        "name": "BiLumix_Professional_Lineup.pdf"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Funnel_Operations_Realtime_Stabilization.pdf",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\보고서\\Funnel_Operations_Realtime_Stabilization.pdf",
+        "name": "Funnel_Operations_Realtime_Stabilization.pdf"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\CTK_AI model creation request list_2026-01-06.xlsx",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\CTK_AI model creation request list_2026-01-06.xlsx",
+        "name": "CTK_AI model creation request list_2026-01-06.xlsx"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Ai loading model (1).json",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\Ai loading model (1).json",
+        "name": "Ai loading model (1).json"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Ai loading model.json",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\Ai loading model.json",
+        "name": "Ai loading model.json"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ai-auto-report-dev-animaapp-com (1).md",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\ai-auto-report-dev-animaapp-com (1).md",
+        "name": "ai-auto-report-dev-animaapp-com (1).md"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ai-auto-report-dev-animaapp-com (2).md",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\ai-auto-report-dev-animaapp-com (2).md",
+        "name": "ai-auto-report-dev-animaapp-com (2).md"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ai-auto-report-dev-animaapp-com (3).md",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\ai-auto-report-dev-animaapp-com (3).md",
+        "name": "ai-auto-report-dev-animaapp-com (3).md"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ai-auto-report-dev-animaapp-com.md",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\ai-auto-report-dev-animaapp-com.md",
+        "name": "ai-auto-report-dev-animaapp-com.md"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ai-auto-report-www-genspark-ai.md",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\ai-auto-report-www-genspark-ai.md",
+        "name": "ai-auto-report-www-genspark-ai.md"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BiLumix_홈페이지 업데이트_260110 (1).pptx",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\BiLumix_홈페이지 업데이트_260110 (1).pptx",
+        "name": "BiLumix_홈페이지 업데이트_260110 (1).pptx"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BiLumix_홈페이지 업데이트_260110.pdf",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\BiLumix_홈페이지 업데이트_260110.pdf",
+        "name": "BiLumix_홈페이지 업데이트_260110.pdf"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BiLumix_홈페이지 업데이트_260110.pptx",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\BiLumix_홈페이지 업데이트_260110.pptx",
+        "name": "BiLumix_홈페이지 업데이트_260110.pptx"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BiLumix_홈페이지 업데이트_EN_수정.pptx",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\BiLumix_홈페이지 업데이트_EN_수정.pptx",
+        "name": "BiLumix_홈페이지 업데이트_EN_수정.pptx"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BiLumix_홈페이지 업데이트_영문.pptx",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\BiLumix_홈페이지 업데이트_영문.pptx",
+        "name": "BiLumix_홈페이지 업데이트_영문.pptx"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BiLumix_홈페이지 업데이트_EN_메인&제품(헤드램프만).pptx",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\BiLumix_홈페이지 업데이트_EN_메인&제품(헤드램프만).pptx",
+        "name": "BiLumix_홈페이지 업데이트_EN_메인&제품(헤드램프만).pptx"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BiLumix_홈페이지 업데이트_KR_최종.pptx.pdf",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\BiLumix_홈페이지 업데이트_KR_최종.pptx.pdf",
+        "name": "BiLumix_홈페이지 업데이트_KR_최종.pptx.pdf"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BiLumix_홈페이지 업데이트_메인+제품 4.pdf",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\문서\\기획\\BiLumix_홈페이지 업데이트_메인+제품 4.pdf",
+        "name": "BiLumix_홈페이지 업데이트_메인+제품 4.pdf"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\2025-29_Device Material (1).zip",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\2025-29_Device Material (1).zip",
+        "name": "2025-29_Device Material (1).zip"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\2025-29_Device Material.zip",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\2025-29_Device Material.zip",
+        "name": "2025-29_Device Material.zip"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\anomaly-studio-package (1).zip",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\anomaly-studio-package (1).zip",
+        "name": "anomaly-studio-package (1).zip"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\anomaly-studio-package.zip",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\anomaly-studio-package.zip",
+        "name": "anomaly-studio-package.zip"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\CursorSetup-x64-2.2.43.exe",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\CursorSetup-x64-2.2.43.exe",
+        "name": "CursorSetup-x64-2.2.43.exe"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\CursorUserSetup-x64-2.5.20 (1).exe",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\CursorUserSetup-x64-2.5.20 (1).exe",
+        "name": "CursorUserSetup-x64-2.5.20 (1).exe"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\CursorUserSetup-x64-2.5.20.exe",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\CursorUserSetup-x64-2.5.20.exe",
+        "name": "CursorUserSetup-x64-2.5.20.exe"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Figma File Cover Thumbnail (Community) (1).zip",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\Figma File Cover Thumbnail (Community) (1).zip",
+        "name": "Figma File Cover Thumbnail (Community) (1).zip"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Figma File Cover Thumbnail (Community) (2).zip",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\Figma File Cover Thumbnail (Community) (2).zip",
+        "name": "Figma File Cover Thumbnail (Community) (2).zip"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Figma File Cover Thumbnail (Community).zip",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\Figma File Cover Thumbnail (Community).zip",
+        "name": "Figma File Cover Thumbnail (Community).zip"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\FigmaSetup (1).exe",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\FigmaSetup (1).exe",
+        "name": "FigmaSetup (1).exe"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\FigmaSetup.exe",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\FigmaSetup.exe",
+        "name": "FigmaSetup.exe"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\After_Effects_Set-Up.exe",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\After_Effects_Set-Up.exe",
+        "name": "After_Effects_Set-Up.exe"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\AnyDesk.exe",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\AnyDesk.exe",
+        "name": "AnyDesk.exe"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GitHubDesktopSetup-x64.exe",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GitHubDesktopSetup-x64.exe",
+        "name": "GitHubDesktopSetup-x64.exe"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\ALZip1230.exe",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\ALZip1230.exe",
+        "name": "ALZip1230.exe"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BDCAMSETUP_KOR (1).EXE",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\BDCAMSETUP_KOR (1).EXE",
+        "name": "BDCAMSETUP_KOR (1).EXE"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\BDCAMSETUP_KOR.EXE",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\BDCAMSETUP_KOR.EXE",
+        "name": "BDCAMSETUP_KOR.EXE"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\background.svg",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\background.svg",
+        "name": "background.svg"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\earth.svg",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\earth.svg",
+        "name": "earth.svg"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-1155337744.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-1155337744.eps",
+        "name": "GettyImages-1155337744.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-1198494282.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-1198494282.eps",
+        "name": "GettyImages-1198494282.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-1314168760.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-1314168760.eps",
+        "name": "GettyImages-1314168760.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2173670589.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2173670589.eps",
+        "name": "GettyImages-2173670589.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2188722029.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2188722029.eps",
+        "name": "GettyImages-2188722029.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2191345833.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2191345833.eps",
+        "name": "GettyImages-2191345833.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2201625938.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2201625938.eps",
+        "name": "GettyImages-2201625938.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2212338274.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2212338274.eps",
+        "name": "GettyImages-2212338274.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2228869553.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2228869553.eps",
+        "name": "GettyImages-2228869553.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2236314614.jpg",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2236314614.jpg",
+        "name": "GettyImages-2236314614.jpg"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2237686300.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2237686300.eps",
+        "name": "GettyImages-2237686300.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2263080125.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2263080125.eps",
+        "name": "GettyImages-2263080125.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-2263590352.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-2263590352.eps",
+        "name": "GettyImages-2263590352.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-961270326.eps",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-961270326.eps",
+        "name": "GettyImages-961270326.eps"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\GettyImages-a14433056.psd",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\GettyImages-a14433056.psd",
+        "name": "GettyImages-a14433056.psd"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Girl.json",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\Girl.json",
+        "name": "Girl.json"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\girl_smiling_and_giving_attitude_look1744107094302.mp4",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\girl_smiling_and_giving_attitude_look1744107094302.mp4",
+        "name": "girl_smiling_and_giving_attitude_look1744107094302.mp4"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\gcapi.dll",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\gcapi.dll",
+        "name": "gcapi.dll"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\free-icon-computer-164360.png",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\free-icon-computer-164360.png",
+        "name": "free-icon-computer-164360.png"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Fire.webm",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\Fire.webm",
+        "name": "Fire.webm"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Free Exiced Orange Character Animation (1).webm",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\Free Exiced Orange Character Animation (1).webm",
+        "name": "Free Exiced Orange Character Animation (1).webm"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\Free Exiced Orange Character Animation.webm",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\Free Exiced Orange Character Animation.webm",
+        "name": "Free Exiced Orange Character Animation.webm"
+      },
+      {
+        "from": "C:\\Users\\Windows11 Pro\\Downloads\\fvg-history-2026-03-06.json",
+        "to": "C:\\Users\\Windows11 Pro\\Downloads\\기타\\fvg-history-2026-03-06.json",
+        "name": "fvg-history-2026-03-06.json"
+      }
+    ],
+    "failed": [
+      {
+        "name": "gen3-15x-002_b490d093-eda1-49ac-875d-2169de411c30.webp",
+        "error": "파일을 찾을 수 없음"
+      }
+    ],
+    "classification_folders": [
+      "이미지/사진",
+      "이미지/스크린샷",
+      "문서/보고서",
+      "문서/기획",
+      "기타"
+    ]
   }
 ]

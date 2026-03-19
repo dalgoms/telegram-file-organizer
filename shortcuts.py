@@ -51,6 +51,8 @@ def resolve_alias(text: str) -> str:
         "다운로드": "downloads", "downloads": "downloads",
         "문서": "documents", "documents": "documents",
         "사진": "pictures", "pictures": "pictures",
+        "음악": "music", "music": "music",
+        "동영상": "videos", "videos": "videos",
     }
     if lower in builtin and builtin[lower] in QUICK_PATHS:
         return QUICK_PATHS[builtin[lower]]
@@ -61,7 +63,8 @@ def resolve_alias(text: str) -> str:
 def format_paths() -> str:
     paths = load_paths()
     builtin_labels = {"desktop": "바탕화면", "downloads": "다운로드",
-                      "documents": "문서", "pictures": "사진"}
+                      "documents": "문서", "pictures": "사진",
+                      "music": "음악", "videos": "동영상"}
 
     lines = ["--- 등록된 바로가기 ---", ""]
 
